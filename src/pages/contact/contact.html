@@ -1,17 +1,45 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Contact
+      Pick a Contact
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
-    </ion-item>
-  </ion-list>
+  
+  <ion-list *ngIf="contact.displayName">
+    <ion-list-header>{{contact.displayName}}</ion-list-header>
+
+    <ion-item-sliding *ngFor="let item of contact.phoneNumbers" #slidingItem>
+    
+        <button ion-item (click)="dial(item.value)">
+            <ion-icon [name]="item.icon" [color]="item.icon=='star'?'bright':'muted'" item-start></ion-icon>
+            {{item.value}} 
+            <ion-note item-end>{{item.country}}</ion-note>
+          </button>
+          <ion-item-options side="right">
+              <button ion-button icon-only [color]="item.icon == 'star' ? 'danger':'secondary'" (click)="toggleFav(item)">
+                  <ion-icon [name]="item.icon == 'star' ? 'star-outline':'star'"></ion-icon>&nbsp;
+                </button>
+          </ion-item-options>
+    </ion-item-sliding>
+  </ion-list> 
+
+  <ion-item text-wrap *ngIf="!contact.displayName">
+    No contact selected. Tap button below to select
+  </ion-item>
+
+  <ion-item text-wrap *ngIf="!contact.phoneNumbers.length && contact.displayName">
+    No phone numbers found 
+  </ion-item>
+
+  <ion-row center>
+      <ion-col text-center>  
+      <button ion-button icon-start round (click)="pickContact()"><ion-icon name="contact"></ion-icon>Pick another</button>
+      </ion-col>
+  </ion-row>
+  
+
+
 </ion-content>

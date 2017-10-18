@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Favorites
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="deleteFavs()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let fav of favList" #slidingItemA>
+      <button ion-item (click)="dial(fav.phone)">
+        {{fav.name}}
+        <ion-note item-end>{{fav.type}}</ion-note>
+        <p>{{fav.phone}}</p>
+      </button>
+
+      <ion-item-options side="right">
+        <button ion-button icon-only color="danger" (click)="removeFav(fav)">
+          <ion-icon name="star-outline"></ion-icon>
+        </button>
+
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+
+  </ion-list>
+
+</ion-content>
