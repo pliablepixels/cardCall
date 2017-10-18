@@ -14,8 +14,6 @@ export class TabsPage {
   tab2Root = FavPage;
   tab3Root = SettingPage;
 
-
-
   constructor(public storage:Storage) {
     storage.ready().then ( () => {
       console.log("Storage engine is:" + storage.driver);

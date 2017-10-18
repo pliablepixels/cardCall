@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { List, IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
 import { Contacts, Contact } from '@ionic-native/contacts';
 import { parse, format, asYouType } from 'libphonenumber-js';
-import {CommonUtilsProvider} from '../../providers/common-utils/common-utils';
+import { CommonUtilsProvider } from '../../providers/common-utils/common-utils';
 import { Events } from 'ionic-angular';
 
 
@@ -21,42 +21,41 @@ export class ContactPage {
   }
 
   favList = []; // {name, number}
-  private _subHandler: (data:any) => void;
+  private _subHandler: (data: any) => void;
 
+  constructor(public navCtrl: NavController, public contacts: Contacts, public platform: Platform, public utils: CommonUtilsProvider, public events: Events) {
 
-
-   constructor(public navCtrl: NavController, public contacts: Contacts, public platform: Platform, public utils:CommonUtilsProvider, public events:Events) {
-
-    this._subHandler = (data) => {this.favChangedNotification(data)};
-    this.events.subscribe('fav:updated', this._subHandler); 
+    this._subHandler = (data) => { this.favChangedNotification(data) };
+    this.events.subscribe('fav:updated', this._subHandler);
   }
 
   favChangedNotification(obj) {
-    
-      console.log ("Got Fab Changed Notif in Contacts " + JSON.stringify(obj));
-      if (obj.name != this.contact.displayName) return;
 
-      for (let i=0; i < this.contact.phoneNumbers.length; i++) {
-          if (this.contact.phoneNumbers[i].value == obj.phone) {
-            this.contact.phoneNumbers[i].icon = this.utils.returnIcon(
-              this.contact.phoneNumbers[i].type);
-          }
+    console.log("Got Fab Changed Notif in Contacts " + JSON.stringify(obj));
+    if (obj.name != this.contact.displayName && obj.name != "") return;
+
+    for (let i = 0; i < this.contact.phoneNumbers.length; i++) {
+      if (this.contact.phoneNumbers[i].value == obj.phone ||
+        obj.name == "") {
+        this.contact.phoneNumbers[i].icon = this.utils.returnIcon(
+          this.contact.phoneNumbers[i].type);
       }
-      
+    }
+
 
   }
 
-  toggleFav (item) {
+  toggleFav(item) {
     if (item.icon == 'star') { // remove fav
       this.utils.updateFav(this.contact.displayName, item, true);
-      setTimeout ( _ => {item.icon = this.utils.returnIcon(item.type);},300);
+      setTimeout(_ => { item.icon = this.utils.returnIcon(item.type); }, 300);
     }
     else { // make fav
       this.utils.updateFav(this.contact.displayName, item, false);
-      setTimeout ( _ => {item.icon = 'star'},300);
+      setTimeout(_ => { item.icon = 'star' }, 300);
     }
     this.list.closeSlidingItems();
-    
+
   }
   processContact(c): any {
     this.contact = {
@@ -88,10 +87,10 @@ export class ContactPage {
     }
   }
 
-  dial (number) {
+  dial(number) {
     this.utils.dial(number);
   }
-  
+
 
   pickContact() {
     this.platform.ready().then(() => {
@@ -104,20 +103,17 @@ export class ContactPage {
 
     })
   }
+  
   ionViewWillEnter() {
     this.utils.getFavList()
-    .then ( fav => {if (fav) this.favList = fav;})
+      .then(fav => { if (fav) this.favList = fav; })
     if (!this.contact.displayName)
       this.pickContact();
-      
-
-      
-
   }
 
 
   ionViewWillUnload() {
-    console.log ("Killing fav subscription");
+    console.log("Killing fav subscription");
     this.events.unsubscribe('fab:updated', this._subHandler);
     this._subHandler = undefined;
   }
