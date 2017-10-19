@@ -120,6 +120,7 @@ export class ContactPage {
 
 
   keypadDial() {
+    if (!this.keypadNumber) return;
     console.log ("DIAL "+this.keypadNumber);
     let u:FavType = {
       name:'keypad',

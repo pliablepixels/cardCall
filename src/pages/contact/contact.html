@@ -52,7 +52,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-item (click)="pickContact()" text-wrap *ngIf="!contact.displayName">
+  <ion-item (click)="pickContact()" text-wrap *ngIf="!contact.displayName && !displayKeypad">
     <p class="vtext"> No contact selected. Tap
       <ion-icon class="vicon" name="contact"></ion-icon> or <ion-icon class="vicon" name="keypad"></ion-icon>  to get started</p>
   </ion-item>
