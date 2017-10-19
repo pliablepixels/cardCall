@@ -178,7 +178,7 @@ export class CommonUtilsProvider {
   updateFav(name:string, item, remove = false) {
     let u:FavType = {
       name: name,
-      phone: item.value,
+      phone: item.phone,
       type: item.type,
       card:''
     }

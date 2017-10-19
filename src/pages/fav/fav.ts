@@ -67,6 +67,7 @@ export class FavPage {
   }
 
   dial(fav) {
+    console.log ("FAV DIAL " + JSON.stringify(fav))
     this.utils.dial(fav.phone);
   }
 

@@ -18,6 +18,14 @@ export class SettingPage {
 
   }
 
+  ionViewWillEnter() {
+    this.utils.getCallingCard()
+    .then (ccard => {
+      console.log ("Got calling card:" + JSON.stringify(ccard));
+      if (ccard) this.ccard = ccard;
+    })
+  }
+
   ionViewDidLeave() {
     if (this.ccard.access) {
       console.log ("SAVING calling card details");
