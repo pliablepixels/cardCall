@@ -22,7 +22,7 @@
 <ion-content>
 
   <ion-item *ngIf="displayKeypad">
-    <ion-input clearInput type="tel" [(ngModel)]="keypadNumber"></ion-input>
+    <ion-input clearInput type="tel" placeholder="enter number" [(ngModel)]="keypadNumber"></ion-input>
     <button ion-button icon-only item-right (click)="keypadDial()"><ion-icon name="call"></ion-icon></button>
 
 
