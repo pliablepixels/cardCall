@@ -5,9 +5,11 @@ import { SettingPage } from '../setting/setting';
 import { Storage } from '@ionic/storage';
 
 
+
 @Component({
   templateUrl: 'tabs.html'
 })
+
 export class TabsPage {
 
   tab1Root = ContactPage;
@@ -19,4 +21,5 @@ export class TabsPage {
       console.log("Storage engine is:" + storage.driver);
     })
   }
+
 }

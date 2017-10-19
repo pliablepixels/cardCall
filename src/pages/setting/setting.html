@@ -1,16 +1,21 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    Hello
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
-</ion-content>
+    <ion-navbar>
+      <ion-title>Settings</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+      <ion-list>
+          <ion-item>
+            <ion-label color="primary">Access Number:</ion-label>
+            <ion-input type="tel" placeholder="" [(ngModel)]="ccard.access"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+              <ion-label color="primary">PIN:</ion-label>
+              <ion-input type="password" placeholder="" [(ngModel)]="ccard.pin"></ion-input>
+            </ion-item>
+      </ion-list>
+  </ion-content>
+  
+  

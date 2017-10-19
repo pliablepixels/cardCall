@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { CommonUtilsProvider, CallingCard } from '../../providers/common-utils/common-utils';
 
 @Component({
   selector: 'page-setting',
@@ -7,8 +8,25 @@ import { NavController } from 'ionic-angular';
 })
 export class SettingPage {
 
-  constructor(public navCtrl: NavController) {
+  ccard:CallingCard = {
+    name:"",
+    access:"18664947291",
+    pin:""
+  }
 
+  constructor(public navCtrl: NavController, public utils:CommonUtilsProvider) {
+
+  }
+
+  ionViewDidLeave() {
+    if (this.ccard.access) {
+      console.log ("SAVING calling card details");
+      this.utils.setCallingCard(this.ccard);
+    }
+    else {
+      console.log ("Not saving details, no access #");
+    }
+    
   }
 
 }

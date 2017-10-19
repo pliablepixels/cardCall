@@ -3,15 +3,33 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { CallNumber } from '@ionic-native/call-number';
-import { Platform } from 'ionic-angular';
+import { Platform, ToastController } from 'ionic-angular';
+
+
+export interface FavType {
+  name:string,
+  phone:string,
+  type:string,
+  card?:string,
+  country?:string,
+  icon?:string,
+}
+
+export interface CallingCard {
+  name:string,
+  access:string,
+  pin:string
+}
 
 @Injectable()
 export class CommonUtilsProvider {
 
-  favList = [];
-  recentList = [];
+  favList:FavType[] = [];
+  recentList:FavType[] = [];
 
-  constructor(public storage: Storage, public call: CallNumber, public platform: Platform) {
+
+  
+  constructor(public toastCtrl: ToastController, public storage: Storage, public call: CallNumber, public platform: Platform) {
     console.log('Hello CommonUtilsProvider Provider');
     // TBD: Handle case when this doesn't happen and updateFav is called
     this.getFavList();
@@ -22,30 +40,63 @@ export class CommonUtilsProvider {
       .then(_ => { return this.storage.ready() })
   }
 
+  presentToast(text, type?, dur?) {
+    
+        var cssClass = 'successToast';
+        if (type == 'error') cssClass = 'errorToast';
+    
+        let toast = this.toastCtrl.create({
+          message: text,
+          duration: dur || 2500,
+          position: 'top',
+          cssClass: cssClass
+        });
+        toast.present();
+      }
+
   returnIcon(str) {
     console.log("icon match called with " + str);
     var re = /mob|cell/gi;
     return (str.search(re) != -1) ? 'phone-portrait' : 'call';
   }
 
-  getFavList(): Promise<any> {
+  getFavList(): Promise<FavType[]> {
     return this.platform.ready()
       .then(_ => { return this.storage.ready() })
       .then(_ => {
         return this.storage.get('fav')
           .then(favs => {
-            // console.log ("GOT FAVLIST="+JSON.stringify(favs));
             if (favs) this.favList = favs
-            return favs; //same as below
-            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then#Chaining
-
-            //return Promise.resolve(favs);
+            return favs; 
           });
 
       })
   }
 
-  setFavList(fav) {
+  setRecentList(recent:FavType[]) {
+    this.recentList = recent;
+    this.platform.ready().then(() => {
+      this.storage.ready().then(() => {
+        this.storage.set('recent', recent)
+      });
+    });
+
+  }
+
+  getRecentList(): Promise<FavType[]> {
+    return this.platform.ready()
+      .then(_ => { return this.storage.ready() })
+      .then(_ => {
+        return this.storage.get('recent')
+          .then(recents => {
+            if (recents) this.recentList = recents
+            return recents; 
+          });
+
+      })
+  }
+
+  setFavList(fav:FavType[]) {
     this.favList = fav;
     this.platform.ready().then(() => {
       this.storage.ready().then(() => {
@@ -56,21 +107,55 @@ export class CommonUtilsProvider {
   }
 
 
+  getCallingCard(): Promise<CallingCard> {
+    return this.platform.ready()
+      .then(_ => { return this.storage.ready() })
+      .then(_ => {
+        return this.storage.get('callingCard')
+      })
+  }
+
+  setCallingCard(card:CallingCard) {
+   
+    this.platform.ready().then(() => {
+      this.storage.ready().then(() => {
+        this.storage.set('callingCard', card)
+      });
+    });
+
+  }
+
+
+
   pause(count): string {
     return ','.repeat(count);
   }
 
 
-  dial(number) {
-    number = number.replace(/\D/g, '');
-    let prefix = '18664947291';
-    let pin = '2110#';
-    let numtodial = prefix + this.pause(3) + pin + this.pause(3) + number;
-    console.log("calling " + numtodial);
-    this.call.callNumber(numtodial, true)
+  dial(number): Promise <any> {
+    return this.getCallingCard()
+    .then (card => {
+      if (!card) {
+        console.log ("No calling card configured");
+        this.presentToast('Calling card not configured', 'error')
+        return Promise.reject(false);
+      }
+      else {
+
+        number = number.replace(/\D/g, '');
+        let prefix = card.access;
+        let pin = card.pin;
+        let numtodial = prefix + this.pause(3) + pin + this.pause(3) + number;
+        console.log("calling " + numtodial);
+        return this.call.callNumber(numtodial, true)
+
+      }
+    })
+
+    
   }
 
-  favIndex(fav, favs): number {
+  favIndex(fav:FavType, favs:FavType[]): number {
     let ndx = -1;
     let i;
     console.log("Searching for:" + JSON.stringify(fav));
@@ -90,11 +175,12 @@ export class CommonUtilsProvider {
 
 
 
-  updateFav(name, item, remove = false) {
-    let u = {
+  updateFav(name:string, item, remove = false) {
+    let u:FavType = {
       name: name,
       phone: item.value,
-      type: item.type
+      type: item.type,
+      card:''
     }
     let ndx = this.favIndex(u, this.favList);
     if (!remove) { // add 

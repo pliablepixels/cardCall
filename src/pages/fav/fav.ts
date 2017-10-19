@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { List, NavController, Platform } from 'ionic-angular';
+import { List, NavController, Platform, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { CallNumber } from '@ionic-native/call-number';
-import { CommonUtilsProvider } from '../../providers/common-utils/common-utils';
+import { FavType, CommonUtilsProvider } from '../../providers/common-utils/common-utils';
 import { Events } from 'ionic-angular';
 
 
@@ -14,21 +14,41 @@ export class FavPage {
 
   @ViewChild(List) list: List; // needed to close sliding list
 
-  favList = []; // {name, number}
+  favList:FavType[] = []; 
 
-  constructor(public navCtrl: NavController, public utils: CommonUtilsProvider, public events: Events) {
+  constructor(public navCtrl: NavController, public utils: CommonUtilsProvider, public events: Events, public alertCtrl:AlertController) {
 
   }
 
+  removeAllFav() {
 
+    const alert = this.alertCtrl.create({
+      title: 'Please Confirm',
+      message: 'Delete all items?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            this.favList.length = 0;
+            this.utils.setFavList(this.favList);
+            this.events.publish("fav:updated", { name: "", phone: "" });
 
-  deleteFavs() {
-    this.favList = [];
-    this.utils.setFavList([]);
-    this.events.publish("fav:updated", { name: "", phone: "" });
+          }
+        }
+      ]
+    }).present();
+
+    
   }
 
-  removeFav(fav) {
+  removeFav(fav:FavType) {
     let ndx = this.favList.indexOf(fav);
     if (ndx !== -1) {
       this.favList.splice(ndx, 1);
@@ -46,18 +66,16 @@ export class FavPage {
     return ','.repeat(count);
   }
 
-  dial(number) {
-    this.utils.dial(number);
+  dial(fav) {
+    this.utils.dial(fav.phone);
   }
 
   ionViewWillEnter() {
     this.utils.getFavList()
       .then(favs => {
         if (favs) this.favList = favs;
-        // console.log ("RECEIVED="+JSON.stringify(favs));
-        // console.log ("STUFFED="+JSON.stringify(this.favList));
-
       });
+      
   }
 
 }
