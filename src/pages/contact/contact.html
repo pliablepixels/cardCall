@@ -5,6 +5,11 @@
     </ion-title>
 
     <ion-buttons end>
+
+      <button ion-button icon-only (click)="toggleKeypad()">
+        <ion-icon name="keypad"></ion-icon>
+      </button>
+
       <button ion-button icon-only (click)="pickContact()">
         <ion-icon name="contact"></ion-icon>
       </button>
@@ -15,6 +20,14 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-item *ngIf="displayKeypad">
+    <ion-input clearInput type="tel" [(ngModel)]="keypadNumber"></ion-input>
+    <button ion-button icon-only item-right (click)="keypadDial()"><ion-icon name="call"></ion-icon></button>
+
+
+
+  </ion-item>
 
   <ion-list *ngIf="contact.displayName">
     <ion-list-header>{{contact.displayName}}</ion-list-header>
@@ -40,34 +53,35 @@
   </ion-list>
 
   <ion-item (click)="pickContact()" text-wrap *ngIf="!contact.displayName">
-    <p class="vtext"> No contact selected. Tap <ion-icon class="vicon" name="contact"></ion-icon> to get started</p>
+    <p class="vtext"> No contact selected. Tap
+      <ion-icon class="vicon" name="contact"></ion-icon> or <ion-icon class="vicon" name="keypad"></ion-icon>  to get started</p>
   </ion-item>
 
 
- 
-    <ion-list>
-      <ion-list-header>Recent Calls
-        <button ion-button icon-only clear item-right (click)="removeAllRecent()">
-          <ion-icon name="trash"></ion-icon>
-        </button>
-      </ion-list-header>
-      <ion-item-sliding *ngFor="let recent of recentList">
-        <button ion-item (click)="dial(recent)">
-          {{recent.name}}
-          <ion-note item-end>{{recent.type}}</ion-note>
-          <p>{{recent.phone}}</p>
-        </button>
 
-        <ion-item-options side="right">
-          <button ion-button icon-only color="danger" (click)="removeRecent(recent)">
-            <ion-icon name="close"></ion-icon>
-          </button>
-        </ion-item-options>
-      </ion-item-sliding>
-      <ion-item text-wrap *ngIf="!recentList.length">
-        <p>No recent calls made</p>
-      </ion-item>
-    </ion-list>
+  <ion-list>
+    <ion-list-header>Recent Calls
+      <button ion-button icon-only clear item-right (click)="removeAllRecent()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let recent of recentList">
+      <button ion-item (click)="dial(recent)">
+        {{recent.name}}
+        <ion-note item-end>{{recent.type}}</ion-note>
+        <p>{{recent.phone}}</p>
+      </button>
+
+      <ion-item-options side="right">
+        <button ion-button icon-only color="danger" (click)="removeRecent(recent)">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item text-wrap *ngIf="!recentList.length">
+      <p>No recent calls made</p>
+    </ion-item>
+  </ion-list>
 
 
 

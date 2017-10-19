@@ -14,6 +14,9 @@ import { Events } from 'ionic-angular';
 
 export class ContactPage {
   @ViewChild(List) list: List; // needed to close sliding list
+  displayKeypad = false;
+  keypadNumber = "";
+
   contact: {
     displayName:string, 
     id:string, 
@@ -32,6 +35,11 @@ export class ContactPage {
 
     this._subHandler = (data) => { this.favChangedNotification(data) };
     this.events.subscribe('fav:updated', this._subHandler);
+  }
+
+  toggleKeypad() {
+    this.displayKeypad = !this.displayKeypad;
+
   }
 
   favChangedNotification(obj) {
@@ -108,6 +116,18 @@ export class ContactPage {
     }
     return (i < this.recentList.length ? true:false)
 
+  }
+
+
+  keypadDial() {
+    console.log ("DIAL "+this.keypadNumber);
+    let u:FavType = {
+      name:'keypad',
+      phone:this.keypadNumber,
+      type:'',
+      icon:'call'
+    }
+    this.dial(u);
   }
 
   dial(item) {
