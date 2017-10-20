@@ -14,14 +14,14 @@ export class FavPage {
 
   @ViewChild(List) list: List; // needed to close sliding list
 
-  favList:FavType[] = []; 
+  favList: FavType[] = [];
 
-  constructor(public navCtrl: NavController, public utils: CommonUtilsProvider, public events: Events, public alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public utils: CommonUtilsProvider, public events: Events, public alertCtrl: AlertController) {
 
   }
 
+  // remove all favorites
   removeAllFav() {
-
     const alert = this.alertCtrl.create({
       title: 'Please Confirm',
       message: 'Delete all items?',
@@ -45,10 +45,11 @@ export class FavPage {
       ]
     }).present();
 
-    
+
   }
 
-  removeFav(fav:FavType) {
+  // remove a specific favorite
+  removeFav(fav: FavType) {
     let ndx = this.favList.indexOf(fav);
     if (ndx !== -1) {
       this.favList.splice(ndx, 1);
@@ -67,7 +68,7 @@ export class FavPage {
   }
 
   dial(fav) {
-    console.log ("FAV DIAL " + JSON.stringify(fav))
+    console.log("FAV DIAL " + JSON.stringify(fav))
     this.utils.dial(fav.phone);
   }
 
@@ -76,7 +77,7 @@ export class FavPage {
       .then(favs => {
         if (favs) this.favList = favs;
       });
-      
+
   }
 
 }

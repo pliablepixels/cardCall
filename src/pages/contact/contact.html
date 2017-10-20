@@ -3,9 +3,7 @@
     <ion-title>
       Pick a Contact
     </ion-title>
-
     <ion-buttons end>
-
       <button ion-button icon-only (click)="toggleKeypad()">
         <ion-icon name="keypad"></ion-icon>
       </button>
@@ -14,24 +12,20 @@
         <ion-icon name="contact"></ion-icon>
       </button>
     </ion-buttons>
-
-
   </ion-navbar>
 </ion-header>
 
 <ion-content>
 
+  <!-- dial pad -->
   <ion-item *ngIf="displayKeypad">
     <ion-input clearInput type="tel" placeholder="enter number" [(ngModel)]="keypadNumber"></ion-input>
     <button ion-button icon-only item-right (click)="keypadDial()"><ion-icon name="call"></ion-icon></button>
-
-
-
   </ion-item>
 
+  <!-- display selected entry from addr book -->
   <ion-list *ngIf="contact.displayName">
     <ion-list-header>{{contact.displayName}}</ion-list-header>
-
     <ion-item-sliding *ngFor="let item of contact.phoneNumbers" #slidingItem>
 
       <button ion-item (click)="dial(item)">
@@ -58,7 +52,7 @@
   </ion-item>
 
 
-
+ <!-- recent call history -->
   <ion-list>
     <ion-list-header>Recent Calls
       <button ion-button icon-only clear item-right (click)="removeAllRecent()">
@@ -82,7 +76,4 @@
       <p>No recent calls made</p>
     </ion-item>
   </ion-list>
-
-
-
 </ion-content>

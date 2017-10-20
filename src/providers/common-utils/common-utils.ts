@@ -5,6 +5,10 @@ import { Storage } from '@ionic/storage';
 import { CallNumber } from '@ionic-native/call-number';
 import { Platform, ToastController } from 'ionic-angular';
 
+ interface OrderType {
+  name:string,
+  value:number
+};
 
 export interface FavType {
   name:string,
@@ -18,7 +22,8 @@ export interface FavType {
 export interface CallingCard {
   name:string,
   access:string,
-  pin:string
+  pin:string,
+  order: OrderType[]
 }
 
 @Injectable()
@@ -26,6 +31,7 @@ export class CommonUtilsProvider {
 
   favList:FavType[] = [];
   recentList:FavType[] = [];
+  
 
 
   
@@ -107,7 +113,7 @@ export class CommonUtilsProvider {
   }
 
 
-  getCallingCard(): Promise<CallingCard> {
+  getCallingCard(): Promise<CallingCard[]> {
     return this.platform.ready()
       .then(_ => { return this.storage.ready() })
       .then(_ => {
@@ -115,10 +121,11 @@ export class CommonUtilsProvider {
       })
   }
 
-  setCallingCard(card:CallingCard) {
+  setCallingCard(card:CallingCard[]) {
    
     this.platform.ready().then(() => {
       this.storage.ready().then(() => {
+        console.log ("SAVING:"+JSON.stringify(card));
         this.storage.set('callingCard', card)
       });
     });
@@ -134,7 +141,8 @@ export class CommonUtilsProvider {
 
   dial(number): Promise <any> {
     return this.getCallingCard()
-    .then (card => {
+    .then (cards => {
+      let card = cards[0];
       if (!card) {
         console.log ("No calling card configured");
         this.presentToast('Calling card not configured', 'error')
@@ -145,9 +153,19 @@ export class CommonUtilsProvider {
         number = number.replace(/\D/g, '');
         let prefix = card.access;
         let pin = card.pin;
-        let numtodial = prefix + this.pause(3) + pin + this.pause(3) + number;
-        console.log("calling " + numtodial);
-        return this.call.callNumber(numtodial, true)
+
+        let sequence = '';
+        for (let i=0; i < card.order.length; i++) {
+         switch (card.order[i].name) {
+           case 'number':  sequence = sequence + number; break;
+           case 'access': sequence = sequence + prefix; break;
+           case 'pause':  sequence = sequence + this.pause(card.order[i].value); break;
+           default : sequence = sequence +card.order[i].name; break;
+         }
+        }
+        //let numtodial = prefix + this.pause(3) + pin + this.pause(3) + number;
+        console.log("calling " + sequence);
+        return this.call.callNumber(sequence, true)
 
       }
     })
