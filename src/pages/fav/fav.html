@@ -15,7 +15,7 @@
 <ion-content>
 
   <ion-list>
-    <ion-item-sliding *ngFor="let fav of favList" >
+    <ion-item-sliding *ngFor="let fav of favList" detail-push>
       <button ion-item (click)="dial(fav)">
         {{fav.name}}
         <ion-note item-end>{{fav.type}}</ion-note>

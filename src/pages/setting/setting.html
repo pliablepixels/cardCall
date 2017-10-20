@@ -14,17 +14,17 @@
 
       <ion-item>
           <ion-label color="primary">Name:</ion-label>
-          <ion-input [readonly]="!isEdit" type="text" placeholder="" [(ngModel)]="ccard[0].name"></ion-input>
+          <ion-input [readonly]="!isEdit" type="text" placeholder="" [(ngModel)]="ccard[cardNdx].name"></ion-input>
         </ion-item>
 
     <ion-item>
       <ion-label color="primary">Access Number:</ion-label>
-      <ion-input type="tel" [readonly]="!isEdit" placeholder="" [(ngModel)]="ccard[0].access"></ion-input>
+      <ion-input type="tel" [readonly]="!isEdit" placeholder="" [(ngModel)]="ccard[cardNdx].access"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label color="primary">PIN:</ion-label>
-      <ion-input [readonly]="!isEdit"  type="password" placeholder="" [(ngModel)]="ccard[0].pin"></ion-input>
+      <ion-input [readonly]="!isEdit"  type="password" placeholder="" [(ngModel)]="ccard[cardNdx].pin"></ion-input>
     </ion-item>
   </ion-list>
 
@@ -38,7 +38,7 @@
       <button ion-button small color="light" (click)="addSequence('number')">number</button>
     </ion-item>
     <ion-item-group [reorder]="isEdit" (ionItemReorder)="reorderItems($event)">
-      <ion-item-sliding *ngFor="let item of ccard[0].order" #slidingItem>
+      <ion-item-sliding *ngFor="let item of ccard[cardNdx].order" #slidingItem>
 
         <ion-item [ngClass]="isEdit?'':'forced-grey'">{{item.name}} <ion-note *ngIf="item.name=='pause'"> {{item.value}}s (swipe right to change)</ion-note> </ion-item>
 

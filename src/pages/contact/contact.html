@@ -26,7 +26,7 @@
   <!-- display selected entry from addr book -->
   <ion-list *ngIf="contact.displayName">
     <ion-list-header>{{contact.displayName}}</ion-list-header>
-    <ion-item-sliding *ngFor="let item of contact.phoneNumbers" #slidingItem>
+    <ion-item-sliding *ngFor="let item of contact.phoneNumbers" detail-push>
 
       <button ion-item (click)="dial(item)">
         <ion-icon [name]="item.icon" [color]="item.icon=='star'?'bright':'muted'" item-start></ion-icon>
@@ -59,7 +59,7 @@
         <ion-icon name="trash"></ion-icon>
       </button>
     </ion-list-header>
-    <ion-item-sliding *ngFor="let recent of recentList">
+    <ion-item-sliding detail-push *ngFor="let recent of recentList">
       <button ion-item (click)="dial(recent)">
         {{recent.name}}
         <ion-note item-end>{{recent.type}}</ion-note>

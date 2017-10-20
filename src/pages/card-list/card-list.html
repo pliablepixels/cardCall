@@ -1,0 +1,52 @@
+<!--
+  Generated template for the CardListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Calling Card List</ion-title>
+
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addCard()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-item *ngIf="displayAddCard">
+    <ion-input clearInput type="text" placeholder="enter card name" [(ngModel)]="newCardName"></ion-input>
+    <button ion-button small item-right (click)="hideAddCard()">done</button>
+  </ion-item>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let card of ccards;let ndx=index" detail-push>
+      <button ion-item (click)="go(card.name, false)"><ion-icon item-end *ngIf="ndx==0" name="checkmark" color="primary"> </ion-icon>{{card.name}}</button>
+
+      <ion-item-options side="right">
+        <button ion-button icon-only color="danger" (click)="removeCard(card)">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-item-options>
+
+      <ion-item-options side="left">
+          <button ion-button icon-only color="primary" (click)="setDefault(card)">
+            <ion-icon name="checkmark"></ion-icon>
+          </button>
+        </ion-item-options>
+
+    </ion-item-sliding>
+    <ion-item *ngIf="!ccards.length">
+      <p class="vtext">No cards added. Tap
+        <ion-icon class="vicon" name="add"></ion-icon> to get started</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

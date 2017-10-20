@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { List, NavController } from 'ionic-angular';
+import { List, NavController, NavParams } from 'ionic-angular';
 import { CommonUtilsProvider, CallingCard } from '../../providers/common-utils/common-utils';
 
 
@@ -20,8 +20,9 @@ export class SettingPage {
   }];
 
   isEdit:boolean = false;
+  cardNdx:number = 0;
 
-  constructor(public navCtrl: NavController, public utils:CommonUtilsProvider) {
+  constructor(public navCtrl: NavController, public navParams:NavParams, public utils:CommonUtilsProvider) {
 
   }
 
@@ -77,14 +78,29 @@ export class SettingPage {
   }
 
   ionViewWillEnter() {
+    let cardName = this.navParams.get("name");
+    this.isEdit = this.navParams.get("edit");
+    console.log ("SETTINGS CALLED WITH "+ cardName);
    this.utils.getCallingCard()
-    .then (ccard => {
-      console.log ("Got calling card:" + JSON.stringify(ccard));
-      if (ccard) this.ccard = ccard;
+    .then (ccards => {
+      console.log ("Got calling card:" + JSON.stringify(ccards));
+      if (ccards) {
+        this.ccard = ccards;
+        let i;
+        for (i=0; i < this.ccard.length; i++) {
+          if (this.ccard[i].name.toLowerCase() == cardName.toLowerCase()) break;
+        }
+        if (i < this.ccard.length) {
+          this.cardNdx = i;
+          console.log ("Found card at index " + this.cardNdx)
+        }
+      }
+
+
     })
   }
 
-  ionViewDidLeave() {
+  ionViewWillLeave() {
     if (this.ccard[0].access) {
       console.log ("SAVING calling card details");
       this.utils.setCallingCard(this.ccard);

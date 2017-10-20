@@ -121,12 +121,12 @@ export class CommonUtilsProvider {
       })
   }
 
-  setCallingCard(card:CallingCard[]) {
+  setCallingCard(card:CallingCard[]) : Promise <any> {
    
-    this.platform.ready().then(() => {
-      this.storage.ready().then(() => {
+    return this.platform.ready().then(() => {
+      return this.storage.ready().then(() => {
         console.log ("SAVING:"+JSON.stringify(card));
-        this.storage.set('callingCard', card)
+        return this.storage.set('callingCard', card)
       });
     });
 

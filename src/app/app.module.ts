@@ -7,6 +7,7 @@ import { FavPage } from '../pages/fav/fav';
 import { ContactPage } from '../pages/contact/contact';
 import { SettingPage } from '../pages/setting/setting';
 import { TabsPage } from '../pages/tabs/tabs';
+import { CardListPage } from '../pages/card-list/card-list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,7 +25,8 @@ import { CommonUtilsProvider } from '../providers/common-utils/common-utils';
     FavPage,
     ContactPage,
     SettingPage,
-    TabsPage
+    TabsPage,
+    CardListPage
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,8 @@ import { CommonUtilsProvider } from '../providers/common-utils/common-utils';
     FavPage,
     ContactPage,
     SettingPage,
-    TabsPage
+    TabsPage,
+    CardListPage
   ],
   providers: [
     StatusBar,
