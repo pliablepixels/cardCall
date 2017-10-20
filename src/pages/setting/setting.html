@@ -1,6 +1,11 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Settings</ion-title>
+    <ion-buttons end>
+    <button ion-button icon-only (click)="toggleEdit()">
+      <ion-icon name="create"></ion-icon>
+    </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -9,42 +14,41 @@
 
       <ion-item>
           <ion-label color="primary">Name:</ion-label>
-          <ion-input type="text" placeholder="" [(ngModel)]="ccard[0].name"></ion-input>
+          <ion-input [readonly]="!isEdit" type="text" placeholder="" [(ngModel)]="ccard[0].name"></ion-input>
         </ion-item>
 
     <ion-item>
       <ion-label color="primary">Access Number:</ion-label>
-      <ion-input type="tel" placeholder="" [(ngModel)]="ccard[0].access"></ion-input>
+      <ion-input type="tel" [readonly]="!isEdit" placeholder="" [(ngModel)]="ccard[0].access"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label color="primary">PIN:</ion-label>
-      <ion-input type="password" placeholder="" [(ngModel)]="ccard[0].pin"></ion-input>
+      <ion-input [readonly]="!isEdit"  type="password" placeholder="" [(ngModel)]="ccard[0].pin"></ion-input>
     </ion-item>
   </ion-list>
 
   <ion-list>
     <ion-list-header>Calling sequence</ion-list-header>
-    <ion-item>
-      Add
-      <button (click)="addSequence('pause')">pause</button>
-      <button (click)="addSequence('#')"> # </button>
-      <button (click)="addSequence('pin')">pin</button>
-      <button (click)="addSequence('access')">access</button>
-      <button (click)="addSequence('number')">number</button>
+    <ion-item *ngIf="isEdit">
+      <button ion-button small color="light" (click)="addSequence('pause')">pause</button>
+      <button ion-button small color="light" (click)="addSequence('#')"> # </button>
+      <button ion-button small color="light" (click)="addSequence('pin')">pin</button>
+      <button ion-button small color="light" (click)="addSequence('access')">access</button>
+      <button ion-button small color="light" (click)="addSequence('number')">number</button>
     </ion-item>
-    <ion-item-group reorder="true" (ionItemReorder)="reorderItems($event)">
+    <ion-item-group [reorder]="isEdit" (ionItemReorder)="reorderItems($event)">
       <ion-item-sliding *ngFor="let item of ccard[0].order" #slidingItem>
 
-        <ion-item>{{item.name}} <ion-note *ngIf="item.name=='pause'"> {{item.value}}s (swipe right to change)</ion-note> </ion-item>
+        <ion-item [ngClass]="isEdit?'':'forced-grey'">{{item.name}} <ion-note *ngIf="item.name=='pause'"> {{item.value}}s (swipe right to change)</ion-note> </ion-item>
 
-        <ion-item-options side="right">
+        <ion-item-options *ngIf="isEdit" side="right">
           <button ion-button icon-only color="danger" (click)="deleteItem(item)">
             <ion-icon name="close"></ion-icon>
           </button>
         </ion-item-options>
 
-        <ion-item-options side="left">
+        <ion-item-options *ngIf="isEdit" side="left">
             <button ion-button icon-only color="primary" (click)="changePause(item, -1)">
               <ion-icon name="remove"></ion-icon>
             </button>

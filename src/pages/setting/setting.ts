@@ -19,10 +19,17 @@ export class SettingPage {
     order: []
   }];
 
+  isEdit:boolean = false;
+
   constructor(public navCtrl: NavController, public utils:CommonUtilsProvider) {
 
   }
 
+  toggleEdit() {
+    this.list.closeSlidingItems();  
+    this.isEdit = !this.isEdit;
+       
+  }
 
   // modify # of seconds of pause
   changePause(item, byVal) {
@@ -33,6 +40,7 @@ export class SettingPage {
 
   // inserts the right code in the order list 
   addSequence(code) {
+    if (!this.isEdit) return;
     console.log ("ccard="+JSON.stringify(this.ccard))
     if (code=='access') {
       code = this.ccard[0].access;
