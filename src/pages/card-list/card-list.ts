@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,trigger,state,style,transition,animate } from '@angular/core';
 import { List, IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingPage} from '../setting/setting';
 import { CommonUtilsProvider, CallingCard } from '../../providers/common-utils/common-utils';
@@ -16,6 +16,14 @@ import { CommonUtilsProvider, CallingCard } from '../../providers/common-utils/c
 @Component({
   selector: 'page-card-list',
   templateUrl: 'card-list.html',
+  animations: [
+    trigger('itemState', [
+        
+        transition('* => void', [
+            animate('500ms ease-in', style({transform: 'translateX(100%)'}))   
+        ])
+    ])
+]
 })
 
 
@@ -75,8 +83,10 @@ export class CardListPage {
   removeCard(card) {
     let ndx = this.ccards.indexOf(card);
     if (ndx != -1) {
-      this.ccards.splice(ndx,1);
-      this.utils.setCallingCard(this.ccards);
+
+      setTimeout ( _=> {this.ccards.splice(ndx,1);
+        this.utils.setCallingCard(this.ccards);},10)
+      
     }
   }
 

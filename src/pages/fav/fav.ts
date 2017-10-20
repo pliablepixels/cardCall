@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,trigger,state,style,transition,animate } from '@angular/core';
 import { List, NavController, Platform, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { CallNumber } from '@ionic-native/call-number';
@@ -8,7 +8,16 @@ import { Events } from 'ionic-angular';
 
 @Component({
   selector: 'page-fav',
-  templateUrl: 'fav.html'
+  templateUrl: 'fav.html',
+  animations: [
+    trigger('itemState', [
+        
+        transition('* => void', [
+            animate('500ms ease-in', style({transform: 'translateX(100%)'}))   
+        ])
+    ])
+]
+  
 })
 export class FavPage {
 

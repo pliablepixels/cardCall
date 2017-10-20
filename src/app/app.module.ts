@@ -16,6 +16,7 @@ import { Contacts } from '@ionic-native/contacts';
 import { CallNumber } from '@ionic-native/call-number';
 import { IonicStorageModule } from '@ionic/storage';
 import { CommonUtilsProvider } from '../providers/common-utils/common-utils';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -30,6 +31,7 @@ import { CommonUtilsProvider } from '../providers/common-utils/common-utils';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({name:'__cardCallDB', driverOrder:['sqlite','websql','indexeddb']})
   ],

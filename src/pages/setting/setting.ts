@@ -44,14 +44,14 @@ export class SettingPage {
     if (!this.isEdit) return;
     console.log ("ccard="+JSON.stringify(this.ccard))
     if (code=='access') {
-      code = this.ccard[0].access;
+      code = this.ccard[this.cardNdx].access;
       if (!code) {
         this.utils.presentToast("No access number entered", "error");
         return;
       }
     } 
     if (code == 'pin') {
-      code = this.ccard[0].pin;
+      code = this.ccard[this.cardNdx].pin;
       if (!code) {
         this.utils.presentToast("No PIN number entered", "error");
         return;
@@ -60,20 +60,20 @@ export class SettingPage {
     let value=0;
     if (code=='pause') value=1;
 
-    this.ccard[0].order.push ({name:code, value:value});
+    this.ccard[this.cardNdx].order.push ({name:code, value:value});
   }
 
   reorderItems(indexes) {
-    let element = this.ccard[0].order[indexes.from];
-    this.ccard[0].order.splice(indexes.from, 1);
-    this.ccard[0].order.splice(indexes.to, 0, element);
+    let element = this.ccard[this.cardNdx].order[indexes.from];
+    this.ccard[this.cardNdx].order.splice(indexes.from, 1);
+    this.ccard[this.cardNdx].order.splice(indexes.to, 0, element);
   }
 
   deleteItem (item) {
     this.list.closeSlidingItems();    
-    let ndx = this.ccard[0].order.indexOf(item);
+    let ndx = this.ccard[this.cardNdx].order.indexOf(item);
     if (ndx !== -1)
-      this.ccard[0].order.splice (ndx, 1);
+      this.ccard[this.cardNdx].order.splice (ndx, 1);
     
   }
 
@@ -101,7 +101,7 @@ export class SettingPage {
   }
 
   ionViewWillLeave() {
-    if (this.ccard[0].access) {
+    if (this.ccard[this.cardNdx].access) {
       console.log ("SAVING calling card details");
       this.utils.setCallingCard(this.ccard);
     }
