@@ -24,6 +24,7 @@ export class FavPage {
   @ViewChild(List) list: List; // needed to close sliding list
 
   favList: FavType[] = [];
+  cardInUse="(none)";
 
   constructor(public navCtrl: NavController, public utils: CommonUtilsProvider, public events: Events, public alertCtrl: AlertController) {
 
@@ -82,11 +83,15 @@ export class FavPage {
   }
 
   ionViewWillEnter() {
+    this.cardInUse="(none)";
     this.utils.getFavList()
       .then(favs => {
         if (favs) this.favList = favs;
+        return this.utils.getCallingCard();
+      })
+      .then (cards => {
+        if (cards) {this.cardInUse = cards[0].name}
       });
-
   }
 
 }

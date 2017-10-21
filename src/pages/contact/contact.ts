@@ -16,6 +16,7 @@ export class ContactPage {
   @ViewChild(List) list: List; // needed to close sliding list
   displayKeypad = false;
   keypadNumber = "";
+  cardInUse="(none)";
 
   // current selected contact from addr book
   contact: {
@@ -203,6 +204,7 @@ export class ContactPage {
   }
   
   ionViewWillEnter() {
+    this.cardInUse="(none)";
     this.utils.getFavList()
       .then(fav => { 
         if (fav) this.favList = fav; 
@@ -210,7 +212,11 @@ export class ContactPage {
       })
       .then (recents => {
         if (recents) this.recentList = recents;
+        return this.utils.getCallingCard();
       })
+      .then (cards => {
+        if (cards) {this.cardInUse = cards[0].name}
+      });
 
    
   }

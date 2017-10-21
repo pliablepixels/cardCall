@@ -1,13 +1,20 @@
 <ion-header>
   <ion-navbar>
+
+      <ion-buttons left>
+          <button ion-button icon-only (click)="toggleKeypad()">
+            <ion-icon name="keypad"></ion-icon>
+          </button>
+    
+        </ion-buttons>
+
     <ion-title>
       Pick a Contact
     </ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="toggleKeypad()">
-        <ion-icon name="keypad"></ion-icon>
-      </button>
 
+   
+
+    <ion-buttons end>
       <button ion-button icon-only (click)="pickContact()">
         <ion-icon name="contact"></ion-icon>
       </button>
@@ -77,3 +84,7 @@
     </ion-item>
   </ion-list>
 </ion-content>
+
+<ion-footer>
+    <p text-center class="subdued">card in use: {{cardInUse}}</p>
+  </ion-footer>
