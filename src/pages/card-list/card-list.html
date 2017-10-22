@@ -22,7 +22,7 @@
 
 <ion-content padding>
 
-  <ion-item *ngIf="displayAddCard">
+  <ion-item [@inputAnim]="'reveal'" *ngIf="displayAddCard">
     <ion-input clearInput type="text" placeholder="enter card name" [(ngModel)]="newCardName"></ion-input>
     <button ion-button small item-right (click)="hideAddCard()">done</button>
   </ion-item>

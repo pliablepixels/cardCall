@@ -28,6 +28,7 @@ export class FavPage {
   @ViewChild(List) list: List; // needed to close sliding list
 
   favList: FavType[] = [];
+  recentList:FavType[] = [];
   cardInUse="(none)";
   cardState = 'hide';
   constructor(public navCtrl: NavController, public utils: CommonUtilsProvider, public events: Events, public alertCtrl: AlertController) {
@@ -77,13 +78,23 @@ export class FavPage {
   }
 
 
+
   pause(count): string {
     return ','.repeat(count);
   }
 
   dial(fav) {
     console.log("FAV DIAL " + JSON.stringify(fav))
-    this.utils.dial(fav.phone);
+    this.utils.dial(fav.phone)
+    .then (_ => {
+      if (!this.utils.isPresentInRecent(fav)) {
+        // add to top of recent call list if not already there
+        this.recentList.unshift(fav);
+        this.utils.setRecentList (this.recentList);
+      } 
+    })
+    .catch (_ => {console.log ("Not called")})
+
   }
 
   ionViewWillEnter() {
@@ -103,8 +114,13 @@ export class FavPage {
         return this.utils.getCallingCard();
       })
       .then (cards => {
-        if (cards) {this.cardInUse = cards[0].name}
+        this.cardInUse = (cards && cards.length) ? cards[0].name: 'none';
+        return this.utils.getRecentList();
+      })
+      .then ( recents => {
+        if (recents) this.recentList = recents;
       });
+
   }
 
 }

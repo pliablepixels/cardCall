@@ -17,7 +17,15 @@ import { Events } from 'ionic-angular';
       transition('hide => reveal', [
         animate('400ms ease-in-out')
       ])
-    ])
+    ]),
+    trigger('inputAnim', [
+      state('reveal', style({transform: 'scale(1.0)'})),
+      transition('void => reveal', [
+        style({backgroundColor:'rgba(46, 204, 113,0.5)', transform: 'scale(1.3)'}),
+        animate('500ms ease-in-out')
+      ])
+    ]),
+
 ]
 })
 
@@ -123,21 +131,6 @@ export class ContactPage {
     }
   }
 
-  // checks if item is in recently called list
-  isPresentInRecent(item) {
-    let i;
-    for (i=0; i < this.recentList.length; i++) {
-      if (this.recentList[i].name == item.name &&
-         this.recentList[i].phone == item.phone &&
-         this.recentList[i].type == item.type)
-          break;
-      
-    }
-    return (i < this.recentList.length ? true:false)
-
-  }
-
-
   // when the keypad is used, we need to fake create the other attributes
   // so they are uniform in the recent list
   keypadDial() {
@@ -155,7 +148,7 @@ export class ContactPage {
   dial(item) {
     this.utils.dial(item.phone)
     .then (_ => {
-      if (!this.isPresentInRecent(item)) {
+      if (!this.utils.isPresentInRecent(item)) {
         // add to top of recent call list if not already there
         this.recentList.unshift(item);
         this.utils.setRecentList (this.recentList);
@@ -227,7 +220,7 @@ export class ContactPage {
         return this.utils.getCallingCard();
       })
       .then (cards => {
-        if (cards) {this.cardInUse = cards[0].name}
+        this.cardInUse = (cards && cards.length) ? cards[0].name: 'none';
       });
 
    

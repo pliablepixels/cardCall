@@ -31,14 +31,23 @@ export class CommonUtilsProvider {
 
   favList:FavType[] = [];
   recentList:FavType[] = [];
+  callingCardList:CallingCard[] = [];
   
-
+  isRecentLoaded:boolean = false;
+  isFavLoaded:boolean = false;
+  isCallingCardLoaded:boolean = false;
 
   
   constructor(public toastCtrl: ToastController, public storage: Storage, public call: CallNumber, public platform: Platform) {
     console.log('Hello CommonUtilsProvider Provider');
     // TBD: Handle case when this doesn't happen and updateFav is called
-    this.getFavList();
+    this.getFavList().then (_ => {this.isFavLoaded = true;})
+    .catch (_=> this.presentToast ("Critical error loading Favorites", "error"));
+    this.getRecentList().then (_ => {this.isRecentLoaded = true;})
+    .catch (_=> this.presentToast ("Critical error loading Recent Calls", "error"));
+    this.getCallingCard().then (_ => {this.isCallingCardLoaded = true;})
+    .catch (_=> this.presentToast ("Critical error loading Calling Calls", "error"));
+
   }
 
   init() {
@@ -83,7 +92,8 @@ export class CommonUtilsProvider {
     this.recentList = recent;
     this.platform.ready().then(() => {
       this.storage.ready().then(() => {
-        this.storage.set('recent', recent)
+        this.storage.set('recent', recent) 
+
       });
     });
 
@@ -112,6 +122,18 @@ export class CommonUtilsProvider {
 
   }
 
+  isPresentInRecent (item:FavType) {
+
+    let i;
+    for (i=0; i < this.recentList.length; i++) {
+      if (this.recentList[i].name == item.name &&
+         this.recentList[i].phone == item.phone &&
+         this.recentList[i].type == item.type)
+          break;
+      
+    }
+    return (i < this.recentList.length ? true:false)
+  }
 
   getCallingCard(): Promise<CallingCard[]> {
     return this.platform.ready()

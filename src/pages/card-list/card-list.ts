@@ -1,5 +1,5 @@
 import { Component, ViewChild,trigger,state,style,transition,animate } from '@angular/core';
-import { List, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { List, IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import {SettingPage} from '../setting/setting';
 import { CommonUtilsProvider, CallingCard } from '../../providers/common-utils/common-utils';
 
@@ -17,13 +17,16 @@ import { CommonUtilsProvider, CallingCard } from '../../providers/common-utils/c
   selector: 'page-card-list',
   templateUrl: 'card-list.html',
   animations: [
-    trigger('itemState', [
-        
-        transition('* => void', [
-            animate('500ms ease-in', style({transform: 'translateX(100%)'}))   
-        ])
-    ])
+    trigger('inputAnim', [
+      state('reveal', style({transform: 'scale(1.0)'})),
+      transition('void => reveal', [
+        style({backgroundColor:'rgba(46, 204, 113,0.5)', transform: 'scale(1.3)'}),
+        animate('500ms ease-in-out')
+      ])
+    ]),
+
 ]
+  
 })
 
 
@@ -41,7 +44,7 @@ export class CardListPage {
     
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public utils:CommonUtilsProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public utils:CommonUtilsProvider, public alertCtrl:AlertController) {
   }
 
   setDefault(card) {
@@ -81,13 +84,37 @@ export class CardListPage {
   }
 
   removeCard(card) {
-    let ndx = this.ccards.indexOf(card);
-    if (ndx != -1) {
 
-      setTimeout ( _=> {this.ccards.splice(ndx,1);
-        this.utils.setCallingCard(this.ccards);},10)
-      
-    }
+    const alert = this.alertCtrl.create({
+      title: 'Please Confirm',
+      message: `Delete ${card.name}?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+            this.list.closeSlidingItems();
+          }
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            this.list.closeSlidingItems();
+            let ndx = this.ccards.indexOf(card);
+            if (ndx != -1) {
+              this.ccards.splice(ndx,1);
+                this.utils.setCallingCard(this.ccards);
+              
+            }
+           
+          }
+        }
+      ]
+    }).present();
+
+
+    
   }
 
   ionViewDidLoad() {

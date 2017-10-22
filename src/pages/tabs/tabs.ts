@@ -7,7 +7,8 @@ import { Storage } from '@ionic/storage';
 
 
 @Component({
-  templateUrl: 'tabs.html'
+  templateUrl: 'tabs.html',
+  
 })
 
 export class TabsPage {
