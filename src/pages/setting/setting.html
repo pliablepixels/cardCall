@@ -12,6 +12,9 @@
 <ion-content padding>
   <ion-list>
 
+      <ion-item *ngIf="!isEdit">
+        <p text-wrap class="vtext">Read only mode. Tap <ion-icon name="create"></ion-icon> to edit </p>
+      </ion-item>
       <ion-item>
           <ion-label color="primary">Name:</ion-label>
           <ion-input [readonly]="!isEdit" type="text" placeholder="" [(ngModel)]="ccard[cardNdx].name"></ion-input>

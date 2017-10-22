@@ -48,5 +48,8 @@
       <p class="vtext">No cards added. Tap
         <ion-icon class="vicon" name="add"></ion-icon> to get started</p>
     </ion-item>
+    <ion-item *ngIf="ccards.length">
+      <p>swipe from left to set a default card, right to delete</p>
+    </ion-item>
   </ion-list>
 </ion-content>
