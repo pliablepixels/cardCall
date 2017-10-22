@@ -11,11 +11,11 @@ import { Events } from 'ionic-angular';
   templateUrl: 'contact.html',
   animations: [
     trigger('cardUsed', [
-        
-      state('in', style({transform: 'translateY(0)'})),
-      transition('void => *', [
-        style({transform: 'translateY(100%)'}),
-        animate(400)
+      
+      state('hide', style({transform: 'translateY(100%)'})),
+      state('reveal', style({transform: 'translateY(0)'})),
+      transition('hide => reveal', [
+        animate('400ms ease-in-out')
       ])
     ])
 ]
@@ -26,6 +26,7 @@ export class ContactPage {
   displayKeypad = false;
   keypadNumber = "";
   cardInUse="(none)";
+  cardState = 'hide';
 
   // current selected contact from addr book
   contact: {
@@ -213,6 +214,8 @@ export class ContactPage {
   }
   
   ionViewWillEnter() {
+    this.cardState = 'hide';
+    setTimeout (_ => {this.cardState = 'reveal';},20);
     this.cardInUse="(none)";
     this.utils.getFavList()
       .then(fav => { 
@@ -234,6 +237,9 @@ export class ContactPage {
     console.log("Killing fav subscription");
     this.events.unsubscribe('fab:updated', this._subHandler);
     this._subHandler = undefined;
+   
+ 
+
   }
 
 

@@ -9,16 +9,18 @@ import { Events } from 'ionic-angular';
 @Component({
   selector: 'page-fav',
   templateUrl: 'fav.html',
+ 
   animations: [
     trigger('cardUsed', [
-        
-      state('in', style({transform: 'translateY(0)'})),
-      transition('void => *', [
-        style({transform: 'translateY(100%)'}),
-        animate(400)
+      
+      state('hide', style({transform: 'translateY(100%)'})),
+      state('reveal', style({transform: 'translateY(0)'})),
+      transition('hide => reveal', [
+        animate('400ms ease-in-out')
       ])
     ])
 ]
+    
   
 })
 export class FavPage {
@@ -27,7 +29,7 @@ export class FavPage {
 
   favList: FavType[] = [];
   cardInUse="(none)";
-
+  cardState = 'hide';
   constructor(public navCtrl: NavController, public utils: CommonUtilsProvider, public events: Events, public alertCtrl: AlertController) {
 
   }
@@ -85,6 +87,8 @@ export class FavPage {
   }
 
   ionViewWillEnter() {
+    this.cardState = 'hide';
+    setTimeout (_ => {this.cardState = 'reveal';},20);
     this.cardInUse="(none)";
     this.utils.getFavList()
       .then(favs => {
