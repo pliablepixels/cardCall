@@ -89,7 +89,7 @@ export class FavPage {
     this.utils.getFavList()
       .then(favs => {
         if (favs) this.favList = favs;
-        this.favList.length = 0;
+        //this.favList.length = 0;
         /*
         this.favList.push ({name:"test1", phone:"1",type:"mob"});
         this.favList.push ({name:"test2", phone:"1",type:"mob"});
