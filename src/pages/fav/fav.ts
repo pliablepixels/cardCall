@@ -10,11 +10,13 @@ import { Events } from 'ionic-angular';
   selector: 'page-fav',
   templateUrl: 'fav.html',
   animations: [
-    trigger('itemState', [
+    trigger('cardUsed', [
         
-        transition('* => void', [
-            animate('500ms ease-in', style({transform: 'translateX(100%)'}))   
-        ])
+      state('in', style({transform: 'translateY(0)'})),
+      transition('void => *', [
+        style({transform: 'translateY(100%)'}),
+        animate(400)
+      ])
     ])
 ]
   
@@ -87,6 +89,13 @@ export class FavPage {
     this.utils.getFavList()
       .then(favs => {
         if (favs) this.favList = favs;
+        this.favList.length = 0;
+        /*
+        this.favList.push ({name:"test1", phone:"1",type:"mob"});
+        this.favList.push ({name:"test2", phone:"1",type:"mob"});
+        this.favList.push ({name:"test3", phone:"1",type:"mob"});
+        this.favList.push ({name:"test4", phone:"1",type:"mob"});*/
+
         return this.utils.getCallingCard();
       })
       .then (cards => {

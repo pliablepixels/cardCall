@@ -1,5 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-
+import { Component, ViewChild,trigger,state,style,transition,animate } from '@angular/core';
 import { List, IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
 import { Contacts, Contact } from '@ionic-native/contacts';
 import { parse, format, asYouType } from 'libphonenumber-js';
@@ -9,7 +8,17 @@ import { Events } from 'ionic-angular';
 
 @Component({
   selector: 'page-contact',
-  templateUrl: 'contact.html'
+  templateUrl: 'contact.html',
+  animations: [
+    trigger('cardUsed', [
+        
+      state('in', style({transform: 'translateY(0)'})),
+      transition('void => *', [
+        style({transform: 'translateY(100%)'}),
+        animate(400)
+      ])
+    ])
+]
 })
 
 export class ContactPage {

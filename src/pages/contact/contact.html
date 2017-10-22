@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="sblue">
 
       <ion-buttons left>
           <button ion-button icon-only (click)="toggleKeypad()">
@@ -85,6 +85,6 @@
   </ion-list>
 </ion-content>
 
-<ion-footer>
-    <p text-center class="subdued">card in use: {{cardInUse}}</p>
-  </ion-footer>
+<ion-footer [@cardUsed]="'in'" class="cardFooter">
+    <p text-center>card in use: {{cardInUse}}</p>
+</ion-footer>

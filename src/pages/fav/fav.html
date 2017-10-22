@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header color="sblue">
   <ion-navbar>
     <ion-title>
       Favorites
@@ -15,7 +15,7 @@
 <ion-content>
 
   <ion-list>
-    <ion-item-sliding   *ngFor="let fav of favList" detail-push>
+    <ion-item-sliding  *ngFor="let fav of favList" detail-push>
       <button ion-item (click)="dial(fav)">
         {{fav.name}}
         <ion-note item-end>{{fav.type}}</ion-note>
@@ -34,6 +34,6 @@
   </ion-item>
 </ion-content>
 
-<ion-footer>
-    <p text-center class="subdued">card in use: {{cardInUse}}</p>
+<ion-footer [@cardUsed]="'in'" class="cardFooter">
+    <p text-center>card in use: {{cardInUse}}</p>
 </ion-footer>
