@@ -2,13 +2,7 @@ import { Component, ViewChild,trigger,state,style,transition,animate } from '@an
 import { List, IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import {SettingPage} from '../setting/setting';
 import { CommonUtilsProvider, CallingCard } from '../../providers/common-utils/common-utils';
-
-/**
- * Generated class for the CardListPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import {InputAnimation} from '../../animations/animations'
 
 
 
@@ -17,14 +11,7 @@ import { CommonUtilsProvider, CallingCard } from '../../providers/common-utils/c
   selector: 'page-card-list',
   templateUrl: 'card-list.html',
   animations: [
-    trigger('inputAnim', [
-      state('reveal', style({transform: 'scale(1.0)'})),
-      transition('void => reveal', [
-        style({backgroundColor:'rgba(46, 204, 113,0.8)', transform: 'scale(1.1)'}),
-        animate('300ms ease-in-out')
-      ])
-    ]),
-
+    InputAnimation
 ]
   
 })

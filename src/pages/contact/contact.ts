@@ -4,29 +4,16 @@ import { Contacts, Contact } from '@ionic-native/contacts';
 import { parse, format, asYouType } from 'libphonenumber-js';
 import { CommonUtilsProvider, FavType } from '../../providers/common-utils/common-utils';
 import { Events } from 'ionic-angular';
+import {CardAnimation, InputAnimation} from '../../animations/animations'
 
 
 @Component({
   selector: 'page-contact',
   templateUrl: 'contact.html',
   animations: [
-    trigger('cardUsed', [
-      
-      state('hide', style({transform: 'translateY(100%)'})),
-      state('reveal', style({transform: 'translateY(0)'})),
-      transition('hide => reveal', [
-        animate('400ms ease-in-out')
-      ])
-    ]),
-    trigger('inputAnim', [
-      state('reveal', style({transform: 'scale(1.0)'})),
-      transition('void => reveal', [
-        style({backgroundColor:'rgba(46, 204, 113,0.8)', transform: 'scale(1.1)'}),
-        animate('300ms ease-in-out')
-      ])
-    ]),
-
-]
+    CardAnimation,
+    InputAnimation
+  ]
 })
 
 export class ContactPage {

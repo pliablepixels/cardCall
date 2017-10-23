@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { CallNumber } from '@ionic-native/call-number';
 import { FavType, CommonUtilsProvider } from '../../providers/common-utils/common-utils';
 import { Events } from 'ionic-angular';
+import {CardAnimation} from '../../animations/animations'
 
 
 @Component({
@@ -11,15 +12,8 @@ import { Events } from 'ionic-angular';
   templateUrl: 'fav.html',
  
   animations: [
-    trigger('cardUsed', [
-      
-      state('hide', style({transform: 'translateY(100%)'})),
-      state('reveal', style({transform: 'translateY(0)'})),
-      transition('hide => reveal', [
-        animate('400ms ease-in-out')
-      ])
-    ])
-]
+    CardAnimation
+  ]
     
   
 })
