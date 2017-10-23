@@ -39,7 +39,7 @@ export class FavPage {
   removeAllFav() {
     const alert = this.alertCtrl.create({
       title: 'Please Confirm',
-      message: 'Delete all items?',
+      message: 'Delete all favorites?',
       buttons: [
         {
           text: 'Cancel',

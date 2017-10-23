@@ -20,8 +20,8 @@ import { CommonUtilsProvider, CallingCard } from '../../providers/common-utils/c
     trigger('inputAnim', [
       state('reveal', style({transform: 'scale(1.0)'})),
       transition('void => reveal', [
-        style({backgroundColor:'rgba(46, 204, 113,0.5)', transform: 'scale(1.3)'}),
-        animate('500ms ease-in-out')
+        style({backgroundColor:'rgba(46, 204, 113,0.8)', transform: 'scale(1.1)'}),
+        animate('300ms ease-in-out')
       ])
     ]),
 
