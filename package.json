@@ -29,7 +29,7 @@
         "@ionic/storage": "^2.0.1",
         "call-number": "^1.0.1",
         "cordova-android": "^6.3.0",
-        "cordova-ios": "^4.4.0",
+        "cordova-ios": "^4.5.2",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-console": "^1.1.0",
         "cordova-plugin-contacts": "^2.3.1",
@@ -68,7 +68,6 @@
             "cordova-sqlite-storage": {}
         },
         "platforms": [
-            "android",
             "ios"
         ]
     }
