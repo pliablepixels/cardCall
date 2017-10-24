@@ -78,6 +78,7 @@ export class FavPage {
   }
 
   directDial (fav) {
+    this.list.closeSlidingItems();
     return this.utils.directDial (fav.phone);
   }
   dial(fav) {
