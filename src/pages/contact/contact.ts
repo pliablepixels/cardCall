@@ -131,6 +131,13 @@ export class ContactPage {
     this.dial(u);
   }
 
+// long press short cut to ignore calling card
+  directDial(item) {
+    this.list.closeSlidingItems();
+    this.utils.directDial(item.phone);
+
+  }
+
   // called when you tap an entry or dial
   dial(item) {
     this.utils.dial(item.phone)

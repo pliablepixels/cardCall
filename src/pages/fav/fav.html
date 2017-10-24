@@ -27,6 +27,11 @@
           <ion-icon name="star-outline"></ion-icon>
         </button>
       </ion-item-options>
+      <ion-item-options side="left">
+        <button ion-button color="muted" (click)="directDial(fav)">
+          <ion-icon name="call"> DD</ion-icon>
+        </button>
+      </ion-item-options>
     </ion-item-sliding>
   </ion-list>
   <ion-item no-lines text-wrap *ngIf="!favList.length">

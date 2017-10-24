@@ -46,6 +46,11 @@
           <ion-icon [name]="item.icon == 'star' ? 'star-outline':'star'"></ion-icon>&nbsp;
         </button>
       </ion-item-options>
+      <ion-item-options side="left">
+        <button ion-button color="muted" (click)="directDial(item)">
+          <ion-icon name="call"> DD</ion-icon>
+        </button>
+      </ion-item-options>
     </ion-item-sliding>
 
     <ion-item text-wrap *ngIf="!contact.phoneNumbers.length && contact.displayName">
@@ -78,6 +83,14 @@
           <ion-icon name="close"></ion-icon>
         </button>
       </ion-item-options>
+
+      <ion-item-options side="left">
+        <button ion-button color="muted" (click)="directDial(recent)">
+          <ion-icon name="call"> DD</ion-icon>
+        </button>
+      </ion-item-options>
+
+
     </ion-item-sliding>
     <ion-item text-wrap *ngIf="!recentList.length">
       <p>No recent calls made</p>

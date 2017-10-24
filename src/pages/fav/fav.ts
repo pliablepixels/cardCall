@@ -77,6 +77,9 @@ export class FavPage {
     return ','.repeat(count);
   }
 
+  directDial (fav) {
+    return this.utils.directDial (fav.phone);
+  }
   dial(fav) {
     console.log("FAV DIAL " + JSON.stringify(fav))
     this.utils.dial(fav.phone)

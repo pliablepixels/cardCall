@@ -160,6 +160,9 @@ export class CommonUtilsProvider {
     return ','.repeat(count);
   }
 
+  directDial(number) {
+    return this.call.callNumber(number, true);
+  }
 
   dial(number): Promise <any> {
     return this.getCallingCard()
