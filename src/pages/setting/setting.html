@@ -52,10 +52,10 @@
         </ion-item-options>
 
         <ion-item-options *ngIf="isEdit && item.name=='pause'" side="left">
-            <button ion-button icon-only color="primary" (click)="changePause(item, -1)">
+            <button ion-button icon-only color="primary" (click)="changePause(item, -2)">
               <ion-icon name="remove"></ion-icon>
             </button>
-            <button ion-button icon-only color="secondary" (click)="changePause(item, 1)">
+            <button ion-button icon-only color="secondary" (click)="changePause(item, 2)">
                 <ion-icon name="add"></ion-icon>
               </button>
           </ion-item-options>

@@ -36,7 +36,7 @@ export class SettingPage {
   // modify # of seconds of pause
   changePause(item, byVal) {
     item.value = item.value + byVal;
-    if (item.value < 1) item.value = 1;
+    if (item.value < 2) item.value = 2;
     if (item.value > 10) item.value = 10;
   }
 
@@ -59,7 +59,7 @@ export class SettingPage {
       }
     } 
     let value=0;
-    if (code=='pause') value=1;
+    if (code=='pause') value=2;
 
     this.ccard[this.cardNdx].order.push ({name:code, value:value});
   }
