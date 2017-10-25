@@ -27,8 +27,9 @@ export class SettingPage {
   }
 
   toggleEdit() {
+    console.log ("Closing");
     this.list.closeSlidingItems();  
-    this.isEdit = !this.isEdit;
+    setTimeout (_=> {this.isEdit = !this.isEdit;},400);
        
   }
 
