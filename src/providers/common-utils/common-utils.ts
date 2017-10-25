@@ -184,7 +184,7 @@ export class CommonUtilsProvider {
          switch (card.order[i].name) {
            case 'number':  sequence = sequence + number; break;
            case 'access': sequence = sequence + prefix; break;
-           case 'pause':  sequence = sequence + this.pause(card.order[i].value); break;
+           case 'pause':  sequence = sequence + this.pause(card.order[i].value/2); break;
            default : sequence = sequence +card.order[i].name; break;
          }
         }
