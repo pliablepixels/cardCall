@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 import { CallNumber } from '@ionic-native/call-number';
 import { FavType, CommonUtilsProvider } from '../../providers/common-utils/common-utils';
 import { Events } from 'ionic-angular';
-import {CardAnimation} from '../../animations/animations'
+import {CardAnimation, MapAnimation} from '../../animations/animations'
 
 
 @Component({
@@ -12,7 +12,8 @@ import {CardAnimation} from '../../animations/animations'
   templateUrl: 'fav.html',
  
   animations: [
-    CardAnimation
+    CardAnimation,
+    MapAnimation
   ]
     
   
@@ -25,10 +26,20 @@ export class FavPage {
   recentList:FavType[] = [];
   cardInUse="(none)";
   cardState = 'hide';
+  showWorldMap = false;
+  mapLoaded = false;
+
   constructor(public navCtrl: NavController, public utils: CommonUtilsProvider, public events: Events, public alertCtrl: AlertController) {
 
   }
 
+  toggleWorldMap() {
+    this.showWorldMap = !this.showWorldMap;
+  }
+
+  mapLoadedCallback() {
+    this.mapLoaded = true;
+  }
   // remove all favorites
   removeAllFav() {
     const alert = this.alertCtrl.create({

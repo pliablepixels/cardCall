@@ -41,8 +41,21 @@
   }
 
   .cardFooter {
-    background-color:#1abc9c;
-    color:white;
+    background-color:#1abc9c !important;
+    color:white !important;
+    box-shadow:none !important;
   }
+
+
+.fullItem {
+    .label {
+        margin: 0 !important;
+     }
+     
+     .item-inner {
+        padding-right: 0px!important;
+        padding-left: 0px!important;
+     }
+}
 
   

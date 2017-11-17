@@ -13,3 +13,6 @@ Screenshots
 ============
 <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/1.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/2.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/3.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/4.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/5.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/6.png" height="400px"/>
 
+3rd party Credits
+==================
+Day Night map from [USNO](http://aa.usno.navy.mil/data/docs/earthview.php)

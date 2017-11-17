@@ -24,3 +24,18 @@ export const CardAnimation = trigger('cardUsed', [
     ])
   ]);
 
+  export const MapAnimation =   trigger
+  (
+    'mapAnim', [
+      transition(':enter', [
+        style({transform: 'translateY(-100%)', opacity: 0.5}),
+        animate('300ms ease-in-out', style({transform: 'translateY(0%)', opacity: 1}))
+      ]),
+      transition(':leave', [
+        style({transform: 'translateY(0)', opacity: 1}),
+        animate('300ms ease-in-out', style({transform: 'translateY(-100%)', opacity: 0}))
+      ])
+    ]
+  );
+
+

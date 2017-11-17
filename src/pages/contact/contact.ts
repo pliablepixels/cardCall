@@ -4,7 +4,7 @@ import { Contacts, Contact } from '@ionic-native/contacts';
 import { parse, format, asYouType } from 'libphonenumber-js';
 import { CommonUtilsProvider, FavType } from '../../providers/common-utils/common-utils';
 import { Events } from 'ionic-angular';
-import {CardAnimation, InputAnimation} from '../../animations/animations'
+import {CardAnimation, InputAnimation, MapAnimation} from '../../animations/animations'
 
 
 @Component({
@@ -12,7 +12,8 @@ import {CardAnimation, InputAnimation} from '../../animations/animations'
   templateUrl: 'contact.html',
   animations: [
     CardAnimation,
-    InputAnimation
+    InputAnimation,
+    MapAnimation
   ]
 })
 
@@ -22,6 +23,9 @@ export class ContactPage {
   keypadNumber = "";
   cardInUse="(none)";
   cardState = 'hide';
+  showWorldMap = false;
+  mapLoaded = false;
+
 
   // current selected contact from addr book
   contact: {
@@ -44,12 +48,24 @@ export class ContactPage {
     // starred in contacts
     this._subHandler = (data) => { this.favChangedNotification(data) };
     this.events.subscribe('fav:updated', this._subHandler);
+   
   }
 
  // dialpad on off
   toggleKeypad() {
+    this.showWorldMap = false;
+    this.mapLoaded = false;
     this.displayKeypad = !this.displayKeypad;
 
+  }
+
+  toggleWorldMap() {
+    this.showWorldMap = !this.showWorldMap;
+    this.mapLoaded = false;
+  }
+
+  mapLoadedCallback() {
+    this.mapLoaded = true;
   }
 
   // callback called when fav page un fabs some entry
@@ -140,6 +156,8 @@ export class ContactPage {
 
   // called when you tap an entry or dial
   dial(item) {
+
+  
     this.utils.dial(item.phone)
     .then (_ => {
       if (!this.utils.isPresentInRecent(item)) {

@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -17,6 +17,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { IonicStorageModule } from '@ionic/storage';
 import { CommonUtilsProvider } from '../providers/common-utils/common-utils';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IonPullupModule } from 'ionic-pullup';
 
 
 
@@ -51,7 +52,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CallNumber,
 
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    
     CommonUtilsProvider
-  ]
+  ],
 })
 export class AppModule {}

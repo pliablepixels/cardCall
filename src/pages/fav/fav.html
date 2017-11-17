@@ -5,6 +5,11 @@
     </ion-title>
 
     <ion-buttons end>
+
+        <button ion-button icon-only (click)="toggleWorldMap()">
+            <ion-icon name="globe"></ion-icon>
+          </button>
+
       <button ion-button icon-only (click)="removeAllFav()">
         <ion-icon name="trash"></ion-icon>
       </button>
@@ -13,6 +18,14 @@
 </ion-header>
 
 <ion-content>
+
+    <ion-item  [@mapAnim] ion-fixed  no-padding class="fullItem" *ngIf="showWorldMap">
+        <div>
+            <ion-spinner *ngIf="!mapLoaded" style="position:relative; top:50%; left:50%;" name="bubbles">loading day night map</ion-spinner>
+        <img  src="http://api.usno.navy.mil/imagery/earth.png?date=today" width="100%" (load)="mapLoadedCallback()" />
+        
+        </div>
+       </ion-item>
 
   <ion-list>
     <ion-item-sliding  *ngFor="let fav of favList" detail-push>

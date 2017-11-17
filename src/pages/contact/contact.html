@@ -15,6 +15,11 @@
    
 
     <ion-buttons end>
+
+        <button ion-button icon-only (click)="toggleWorldMap()">
+            <ion-icon name="globe"></ion-icon>
+          </button>
+
       <button ion-button icon-only (click)="pickContact()">
         <ion-icon name="contact"></ion-icon>
       </button>
@@ -24,11 +29,22 @@
 
 <ion-content>
 
+    <ion-item *ngIf="displayKeypad" [@inputAnim]="'reveal'">
+        <ion-input clearInput type="tel" placeholder="enter number" [(ngModel)]="keypadNumber"></ion-input>
+        <button ion-button small item-right (click)="keypadDial()">dial</button>
+      </ion-item>
+
+  <ion-item [@mapAnim] ion-fixed  no-padding class="fullItem" *ngIf="showWorldMap">
+    <div>
+        <ion-spinner *ngIf="!mapLoaded" style="position:relative; top:50%; left:50%;" name="bubbles">loading day night map</ion-spinner>
+    <img  src="http://api.usno.navy.mil/imagery/earth.png?date=today" width="100%" (load)="mapLoadedCallback()" />
+    
+    </div>
+   </ion-item>
+
+
   <!-- dial pad -->
-  <ion-item *ngIf="displayKeypad" [@inputAnim]="'reveal'">
-    <ion-input clearInput type="tel" placeholder="enter number" [(ngModel)]="keypadNumber"></ion-input>
-    <button ion-button icon-only item-right (click)="keypadDial()"><ion-icon name="call"></ion-icon></button>
-  </ion-item>
+ 
 
   <!-- display selected entry from addr book -->
   <ion-list *ngIf="contact.displayName">
