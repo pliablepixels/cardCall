@@ -2,9 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { List, NavController, NavParams } from 'ionic-angular';
 import { CommonUtilsProvider, CallingCard } from '../../providers/common-utils/common-utils';
 
-
-
-
 @Component({
   selector: 'page-setting',
   templateUrl: 'setting.html'
@@ -22,7 +19,10 @@ export class SettingPage {
   isEdit:boolean = false;
   cardNdx:number = 0;
 
+ 
+
   constructor(public navCtrl: NavController, public navParams:NavParams, public utils:CommonUtilsProvider) {
+    
 
   }
 
