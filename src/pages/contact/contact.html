@@ -34,13 +34,12 @@
         <button ion-button small item-right (click)="keypadDial()">dial</button>
       </ion-item>
 
-  <ion-item [@mapAnim] ion-fixed  no-padding class="fullItem" *ngIf="showWorldMap">
-    <div>
-        <ion-spinner *ngIf="!mapLoaded" style="position:relative; top:50%; left:50%;" name="bubbles">loading day night map</ion-spinner>
-    <img  src="http://api.usno.navy.mil/imagery/earth.png?date=today" width="100%" (load)="mapLoadedCallback()" />
-    
+  <ion-item [@mapAnim] no-padding class="fullItem" *ngIf="showWorldMap">
+   <div>
+        <ion-spinner *ngIf="!mapLoaded" name="bubbles"></ion-spinner>
+    <img  src="http://api.usno.navy.mil/imagery/earth.png?date=today"  (load)="mapLoadedCallback()" />
     </div>
-   </ion-item>
+  </ion-item>
 
 
   <!-- dial pad -->
@@ -55,7 +54,7 @@
         <ion-icon [name]="item.icon" [color]="item.icon=='star'?'bright':'muted'" item-start></ion-icon>
         {{item.phone}}
         <ion-note item-end>{{item.type}}</ion-note>
-        <p>{{item.country}}</p>
+        <p>{{getLocTz(item.phone)}}</p>
       </button>
       <ion-item-options side="right">
         <button ion-button icon-only [color]="item.icon == 'star' ? 'danger':'secondary'" (click)="toggleFav(item)">
@@ -92,6 +91,7 @@
         {{recent.name}}
         <ion-note item-end>{{recent.type}}</ion-note>
         <p>{{recent.phone}}</p>
+        <p *ngIf="recent.country">{{recent.country}}</p>
       </button>
 
       <ion-item-options side="right">

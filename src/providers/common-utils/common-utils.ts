@@ -5,6 +5,8 @@ import { Storage } from '@ionic/storage';
 import { CallNumber } from '@ionic-native/call-number';
 import { Platform, ToastController } from 'ionic-angular';
 
+declare var getLocalInfo:any;
+
  interface OrderType {
   name:string,
   value:number
@@ -158,6 +160,16 @@ export class CommonUtilsProvider {
 
   pause(count): string {
     return ','.repeat(count);
+  }
+
+  getLocTz(phone) {
+    let l = getLocalInfo(phone, {military: false, 
+      zone_display: 'area' });
+    let result='';
+    if (l.time.display) result+= l.time.display;
+    if (l.time.display && l.location) result+=" in "; 
+    if (l.location) result+=l.location;
+    return result;
   }
 
   directDial(number) {

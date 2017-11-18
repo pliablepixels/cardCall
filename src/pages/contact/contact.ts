@@ -7,6 +7,7 @@ import { Events } from 'ionic-angular';
 import {CardAnimation, InputAnimation, MapAnimation} from '../../animations/animations'
 
 
+
 @Component({
   selector: 'page-contact',
   templateUrl: 'contact.html',
@@ -53,8 +54,6 @@ export class ContactPage {
 
  // dialpad on off
   toggleKeypad() {
-    this.showWorldMap = false;
-    this.mapLoaded = false;
     this.displayKeypad = !this.displayKeypad;
 
   }
@@ -97,6 +96,13 @@ export class ContactPage {
 
   }
 
+
+  getLocTz(phone) {
+
+    let x = this.utils.getLocTz(phone);
+    //console.log ("------->"+x);
+    return x;
+  }
   // called after you pick a contact
   processContact(c): any {
     this.contact = {
@@ -125,12 +131,12 @@ export class ContactPage {
       this.contact.phoneNumbers.push({
         icon: this.utils.returnIcon(p[i].type),
         phone: pp,
-        country: pc,
+        country: this.utils.getLocTz(pp),
         type: p[i].type,
         name:this.contact.displayName
 
       })
-      console.log("PUSHED:" + JSON.stringify(pc));
+     // console.log("PUSHED:" + JSON.stringify(pc));
     }
   }
 
@@ -138,11 +144,20 @@ export class ContactPage {
   // so they are uniform in the recent list
   keypadDial() {
     if (!this.keypadNumber) return;
+
+   let pp = this.keypadNumber;
+   if (pp[0]!='+') {
+     pp = '+' + pp;
+    }
+
+    console.log ("Parsing"+pp);
     let u:FavType = {
       name:'keypad',
       phone:this.keypadNumber,
       type:'',
-      icon:'call'
+      icon:'call',
+      country: this.utils.getLocTz(pp),
+
     }
     this.dial(u);
   }
@@ -157,6 +172,17 @@ export class ContactPage {
   // called when you tap an entry or dial
   dial(item) {
 
+   /* getLocalInfo(item.phone,{ 
+      military: false, 
+      zone_display: 'area' 
+    }, 
+      function(object){ 
+        var phoneInfo = object.time.display +' '+ object.location; 
+        console.log ( phoneInfo ); 
+    
+        // 8:45 PM Nashville, TN 
+    
+    }); */
   
     this.utils.dial(item.phone)
     .then (_ => {

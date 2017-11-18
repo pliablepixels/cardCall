@@ -7,6 +7,9 @@ import {
     transition
 } from '@angular/core';
 
+
+import {query, stagger} from '@angular/animations';
+
 export const CardAnimation = trigger('cardUsed', [
     
     state('hide', style({transform: 'translateY(100%)'})),
@@ -28,14 +31,12 @@ export const CardAnimation = trigger('cardUsed', [
   (
     'mapAnim', [
       transition(':enter', [
-        style({transform: 'translateY(-100%)', opacity: 0.5}),
-        animate('300ms ease-in-out', style({transform: 'translateY(0%)', opacity: 1}))
+        style({height:'0px', opacity: 0, minHeight:0}),
+        animate('300ms ease-in-out', style( {  height:'*',opacity: 1}))
       ]),
       transition(':leave', [
-        style({transform: 'translateY(0)', opacity: 1}),
-        animate('300ms ease-in-out', style({transform: 'translateY(-100%)', opacity: 0}))
+        style({opacity: 1}),
+        animate('300ms ease-in-out', style({height:'0px', opacity: 0, minHeight:0}))
       ])
     ]
   );
-
-

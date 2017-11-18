@@ -37,6 +37,12 @@ export class FavPage {
     this.showWorldMap = !this.showWorldMap;
   }
 
+  getLocTz(phone) {
+    
+        let x = this.utils.getLocTz(phone);
+        return x;
+      }
+
   mapLoadedCallback() {
     this.mapLoaded = true;
   }
