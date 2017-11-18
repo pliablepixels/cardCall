@@ -4,6 +4,7 @@ An easy to use calling card app for iOS and Android
 
 Key Features
 =============
+* Tells you the time in the destination (awesomely useful)
 * Manage multiple cards
 * Easy drag drop of calling sequence
 * Favorites and Address book dial
@@ -11,7 +12,7 @@ Key Features
 
 Screenshots
 ============
-<img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/1.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/2.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/3.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/4.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/5.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/6.png" height="400px"/>
+<img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/1.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/6.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/2.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/3.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/4.png" height="400px"/> <img src="https://github.com/pliablepixels/cardCall/blob/master/screenshots/5.png" height="400px"/> 
 
 3rd party Credits
 ==================
