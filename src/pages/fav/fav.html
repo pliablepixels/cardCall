@@ -33,7 +33,7 @@
         {{fav.name}}
         <ion-note item-end>{{fav.type}}</ion-note>
         <p>{{fav.phone}}</p>
-        <p>{{getLocTz(fav.phone)}}</p>
+        <p *ngIf="getLocTz(fav.phone)">{{getLocTz(fav.phone)}}</p>
       </button>
 
       <ion-item-options side="right">

@@ -54,7 +54,7 @@
         <ion-icon [name]="item.icon" [color]="item.icon=='star'?'bright':'muted'" item-start></ion-icon>
         {{item.phone}}
         <ion-note item-end>{{item.type}}</ion-note>
-        <p>{{getLocTz(item.phone)}}</p>
+        <p *ngIf="getLocTz(item.phone)">{{getLocTz(item.phone)}}</p>
       </button>
       <ion-item-options side="right">
         <button ion-button icon-only [color]="item.icon == 'star' ? 'danger':'secondary'" (click)="toggleFav(item)">
@@ -91,7 +91,7 @@
         {{recent.name}}
         <ion-note item-end>{{recent.type}}</ion-note>
         <p>{{recent.phone}}</p>
-        <p *ngIf="recent.country">{{recent.country}}</p>
+        <p *ngIf="getLocTz(recent.phone)">{{getLocTz(recent.phone)}}</p>
       </button>
 
       <ion-item-options side="right">

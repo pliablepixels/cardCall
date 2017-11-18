@@ -82,6 +82,10 @@ export class ContactPage {
 
   }
 
+  getLocTz (phone) {
+    return this.utils.getLocTz(phone);
+  }
+
   // toggle a phone entry on or off
   toggleFav(item) {
     if (item.icon == 'star') { // remove fav
@@ -96,13 +100,6 @@ export class ContactPage {
 
   }
 
-
-  getLocTz(phone) {
-
-    let x = this.utils.getLocTz(phone);
-    //console.log ("------->"+x);
-    return x;
-  }
   // called after you pick a contact
   processContact(c): any {
     this.contact = {
@@ -131,7 +128,6 @@ export class ContactPage {
       this.contact.phoneNumbers.push({
         icon: this.utils.returnIcon(p[i].type),
         phone: pp,
-        country: this.utils.getLocTz(pp),
         type: p[i].type,
         name:this.contact.displayName
 
@@ -155,8 +151,7 @@ export class ContactPage {
       name:'keypad',
       phone:this.keypadNumber,
       type:'',
-      icon:'call',
-      country: this.utils.getLocTz(pp),
+      icon:'call'
 
     }
     this.dial(u);

@@ -37,12 +37,6 @@ export class FavPage {
     this.showWorldMap = !this.showWorldMap;
   }
 
-  getLocTz(phone) {
-    
-        let x = this.utils.getLocTz(phone);
-        return x;
-      }
-
   mapLoadedCallback() {
     this.mapLoaded = true;
   }
@@ -92,6 +86,10 @@ export class FavPage {
 
   pause(count): string {
     return ','.repeat(count);
+  }
+
+  getLocTz (phone) {
+    return this.utils.getLocTz(phone);
   }
 
   directDial (fav) {
