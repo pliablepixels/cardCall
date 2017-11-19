@@ -15,8 +15,6 @@ import {CardAnimation, MapAnimation} from '../../animations/animations'
     CardAnimation,
     MapAnimation
   ]
-    
-  
 })
 export class FavPage {
 
@@ -33,14 +31,30 @@ export class FavPage {
 
   }
 
-  toggleWorldMap() {
+/**
+ * toggle day/night map
+ * 
+ * @memberof FavPage
+ */
+toggleWorldMap() {
     this.showWorldMap = !this.showWorldMap;
   }
 
-  mapLoadedCallback() {
+/**
+ * invoked when map image is loaded.
+ * used to hide ion-spinner
+ * 
+ * @memberof FavPage
+ */
+mapLoadedCallback() {
     this.mapLoaded = true;
   }
-  // remove all favorites
+
+  /**
+   * removes all favorites
+   * 
+   * @memberof FavPage
+   */
   removeAllFav() {
     const alert = this.alertCtrl.create({
       title: 'Please Confirm',
@@ -68,8 +82,13 @@ export class FavPage {
 
   }
 
-  // remove a specific favorite
-  removeFav(fav: FavType) {
+/**
+ * removes a specific favorite
+ * 
+ * @param {FavType} fav 
+ * @memberof FavPage
+ */
+removeFav(fav: FavType) {
     let ndx = this.favList.indexOf(fav);
     if (ndx !== -1) {
       this.favList.splice(ndx, 1);
@@ -82,20 +101,36 @@ export class FavPage {
 
   }
 
-
-
-  pause(count): string {
-    return ','.repeat(count);
-  }
-
+  /**
+   * wrapper to return location and time
+   * based on phone#
+   * 
+   * @param {any} phone 
+   * @returns 
+   * @memberof FavPage
+   */
   getLocTz (phone) {
     return this.utils.getLocTz(phone);
   }
 
-  directDial (fav) {
+/**
+ * dial # without using calling card
+ * 
+ * @param {any} fav 
+ * @returns 
+ * @memberof FavPage
+ */
+directDial (fav) {
     this.list.closeSlidingItems();
     return this.utils.directDial (fav.phone);
   }
+
+  /**
+   * dial entry from favorite 
+   * 
+   * @param {any} fav 
+   * @memberof FavPage
+   */
   dial(fav) {
     console.log("FAV DIAL " + JSON.stringify(fav))
     this.utils.dial(fav.phone)
@@ -117,13 +152,6 @@ export class FavPage {
     this.utils.getFavList()
       .then(favs => {
         if (favs) this.favList = favs;
-        //this.favList.length = 0;
-        /*
-        this.favList.push ({name:"test1", phone:"1",type:"mob"});
-        this.favList.push ({name:"test2", phone:"1",type:"mob"});
-        this.favList.push ({name:"test3", phone:"1",type:"mob"});
-        this.favList.push ({name:"test4", phone:"1",type:"mob"});*/
-
         return this.utils.getCallingCard();
       })
       .then (cards => {

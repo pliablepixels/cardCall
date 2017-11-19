@@ -5,13 +5,15 @@ import { Storage } from '@ionic/storage';
 import { CallNumber } from '@ionic-native/call-number';
 import { Platform, ToastController } from 'ionic-angular';
 
-declare var getLocalInfo:any;
+declare var getLocalInfo:any; //chronomouse
 
+// structure for dialing sequence
  interface OrderType {
   name:string,
   value:number
 };
 
+// structure for favorite entry
 export interface FavType {
   name:string,
   phone:string,
@@ -21,6 +23,7 @@ export interface FavType {
   icon?:string,
 }
 
+// structure for calling card list
 export interface CallingCard {
   name:string,
   access:string,
@@ -57,6 +60,14 @@ export class CommonUtilsProvider {
       .then(_ => { return this.storage.ready() })
   }
 
+  /**
+   * displays a toast
+   * 
+   * @param {any} text 
+   * @param {any} [type] 
+   * @param {any} [dur] 
+   * @memberof CommonUtilsProvider
+   */
   presentToast(text, type?, dur?) {
     
         var cssClass = 'successToast';
@@ -70,14 +81,26 @@ export class CommonUtilsProvider {
         });
         toast.present();
       }
-
-  returnIcon(str) {
+/**
+ * based on type of phone, returns icon for cell phone or regular phone
+ * 
+ * @param {any} str 
+ * @returns 
+ * @memberof CommonUtilsProvider
+ */
+returnIcon(str) {
     console.log("icon match called with " + str);
     var re = /mob|cell/gi;
     return (str.search(re) != -1) ? 'phone-portrait' : 'call';
   }
 
-  getFavList(): Promise<FavType[]> {
+/**
+ * returns saved fav list
+ * 
+ * @returns {Promise<FavType[]>} 
+ * @memberof CommonUtilsProvider
+ */
+getFavList(): Promise<FavType[]> {
     return this.platform.ready()
       .then(_ => { return this.storage.ready() })
       .then(_ => {
@@ -90,7 +113,13 @@ export class CommonUtilsProvider {
       })
   }
 
-  setRecentList(recent:FavType[]) {
+/**
+ * saves Recently dialed list
+ * 
+ * @param {FavType[]} recent 
+ * @memberof CommonUtilsProvider
+ */
+setRecentList(recent:FavType[]) {
     this.recentList = recent;
     this.platform.ready().then(() => {
       this.storage.ready().then(() => {
@@ -101,7 +130,13 @@ export class CommonUtilsProvider {
 
   }
 
-  getRecentList(): Promise<FavType[]> {
+/**
+ * returns saved recently dialed list
+ * 
+ * @returns {Promise<FavType[]>} 
+ * @memberof CommonUtilsProvider
+ */
+getRecentList(): Promise<FavType[]> {
     return this.platform.ready()
       .then(_ => { return this.storage.ready() })
       .then(_ => {
@@ -114,7 +149,13 @@ export class CommonUtilsProvider {
       })
   }
 
-  setFavList(fav:FavType[]) {
+/**
+ * saves favorite list 
+ *  
+ * @param {FavType[]} fav 
+ * @memberof CommonUtilsProvider
+ */
+setFavList(fav:FavType[]) {
     this.favList = fav;
     this.platform.ready().then(() => {
       this.storage.ready().then(() => {
@@ -124,6 +165,14 @@ export class CommonUtilsProvider {
 
   }
 
+  /**
+   * checks if an entry is already there in recent list
+   * used to avoid duplicate entries
+   * 
+   * @param {FavType} item 
+   * @returns 
+   * @memberof CommonUtilsProvider
+   */
   isPresentInRecent (item:FavType) {
 
     let i;
@@ -137,6 +186,12 @@ export class CommonUtilsProvider {
     return (i < this.recentList.length ? true:false)
   }
 
+  /**
+   * returns list of saved calling cards
+   * 
+   * @returns {Promise<CallingCard[]>} 
+   * @memberof CommonUtilsProvider
+   */
   getCallingCard(): Promise<CallingCard[]> {
     return this.platform.ready()
       .then(_ => { return this.storage.ready() })
@@ -145,7 +200,14 @@ export class CommonUtilsProvider {
       })
   }
 
-  setCallingCard(card:CallingCard[]) : Promise <any> {
+/**
+ * saves calling card list
+ * 
+ * @param {CallingCard[]} card 
+ * @returns {Promise <any>} 
+ * @memberof CommonUtilsProvider
+ */
+setCallingCard(card:CallingCard[]) : Promise <any> {
    
     return this.platform.ready().then(() => {
       return this.storage.ready().then(() => {
@@ -156,13 +218,28 @@ export class CommonUtilsProvider {
 
   }
 
-
-
+  /**
+   * returns commas for each pause count
+   * used for dial sequence
+   * 
+   * @param {any} count 
+   * @returns {string} 
+   * @memberof CommonUtilsProvider
+   */
   pause(count): string {
     return ','.repeat(count);
   }
 
-  getLocTz(phone) {
+/**
+ * Uses https://github.com/zMeadz/chronomouse 
+ * to convert a phone # to time and location
+ * if possible
+ * 
+ * @param {any} phone 
+ * @returns 
+ * @memberof CommonUtilsProvider
+ */
+getLocTz(phone) {
     let l = getLocalInfo(phone, {military: false, 
       zone_display: 'area' });
     let result='';
@@ -172,11 +249,28 @@ export class CommonUtilsProvider {
     return result;
   }
 
-  directDial(number) {
+
+/**
+ * dials a # directly. Core function called by wrappers 
+ * of other pages
+ * 
+ * @param {any} number 
+ * @returns 
+ * @memberof CommonUtilsProvider
+ */
+directDial(number) {
     return this.call.callNumber(number, true);
   }
 
-  dial(number): Promise <any> {
+/**
+ * dials a # via the default calling card. Core function
+ * called by wrappers of other pages
+ * 
+ * @param {any} number 
+ * @returns {Promise <any>} 
+ * @memberof CommonUtilsProvider
+ */
+dial(number): Promise <any> {
     return this.getCallingCard()
     .then (cards => {
       let card = cards[0];
@@ -210,13 +304,21 @@ export class CommonUtilsProvider {
     
   }
 
-  favIndex(fav:FavType, favs:FavType[]): number {
+/**
+ * returns indes of fav entry inside a fav list
+ * 
+ * @param {FavType} fav 
+ * @param {FavType[]} favs 
+ * @returns {number} 
+ * @memberof CommonUtilsProvider
+ */
+favIndex(fav:FavType, favs:FavType[]): number {
     let ndx = -1;
     let i;
-    console.log("Searching for:" + JSON.stringify(fav));
+    //console.log("Searching for:" + JSON.stringify(fav));
     for (i = 0; i < favs.length; i++) {
 
-      console.log("Comparing to:" + JSON.stringify(favs[i]));
+     // console.log("Comparing to:" + JSON.stringify(favs[i]));
       if (favs[i].name == fav.name &&
         favs[i].phone == fav.phone &&
         favs[i].type == fav.type) {
@@ -229,8 +331,17 @@ export class CommonUtilsProvider {
   }
 
 
-
-  updateFav(name:string, item, remove = false) {
+/**
+ * either adds or removes a fav entry
+ * called when you 'star' or 'unstar' an entry
+ * from either contact or fav page
+ * 
+ * @param {string} name 
+ * @param {any} item 
+ * @param {boolean} [remove=false] 
+ * @memberof CommonUtilsProvider
+ */
+updateFav(name:string, item, remove = false) {
     let u:FavType = {
       name: name,
       phone: item.phone,

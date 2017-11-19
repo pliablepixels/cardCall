@@ -19,12 +19,10 @@ export class SettingPage {
   isEdit:boolean = false;
   cardNdx:number = 0;
 
- 
-
   constructor(public navCtrl: NavController, public navParams:NavParams, public utils:CommonUtilsProvider) {
     
-
   }
+
 
   toggleEdit() {
     console.log ("Closing");
@@ -33,15 +31,31 @@ export class SettingPage {
        
   }
 
-  // modify # of seconds of pause
+
+  /**
+   * Modify the pause value 
+   * Each pause is 2s
+   * 
+   * @param {any} item 
+   * @param {any} byVal 
+   * @memberof SettingPage
+   */
   changePause(item, byVal) {
     item.value = item.value + byVal;
     if (item.value < 2) item.value = 2;
     if (item.value > 10) item.value = 10;
   }
 
-  // inserts the right code in the order list 
-  addSequence(code) {
+/**
+ * called each time you add a calling sequence
+ * by pressing one of the buttons - converts to 
+ * sequence of numbers, or pause digit, etc.
+ * 
+ * @param {any} code 
+ * @returns 
+ * @memberof SettingPage
+ */
+addSequence(code) {
     if (!this.isEdit) return;
     console.log ("ccard="+JSON.stringify(this.ccard))
     if (code=='access') {
@@ -64,13 +78,25 @@ export class SettingPage {
     this.ccard[this.cardNdx].order.push ({name:code, value:value});
   }
 
+  /**
+   * move an entry in a dial sequence around
+   * 
+   * @param {any} indexes 
+   * @memberof SettingPage
+   */
   reorderItems(indexes) {
     let element = this.ccard[this.cardNdx].order[indexes.from];
     this.ccard[this.cardNdx].order.splice(indexes.from, 1);
     this.ccard[this.cardNdx].order.splice(indexes.to, 0, element);
   }
-
-  deleteItem (item) {
+  
+/**
+ * removes a dial sequence
+ * 
+ * @param {any} item 
+ * @memberof SettingPage
+ */
+deleteItem (item) {
     this.list.closeSlidingItems();    
     let ndx = this.ccard[this.cardNdx].order.indexOf(item);
     if (ndx !== -1)

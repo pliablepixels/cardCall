@@ -10,6 +10,7 @@ import {
 
 import {query, stagger} from '@angular/animations';
 
+// current card used anim - slide up from bottom
 export const CardAnimation = trigger('cardUsed', [
     
     state('hide', style({transform: 'translateY(100%)'})),
@@ -19,6 +20,7 @@ export const CardAnimation = trigger('cardUsed', [
     ])
   ]);
 
+  // input field focus - colored backround and zoom in 
   export const InputAnimation =   trigger('inputAnim', [
     state('reveal', style({transform: 'scale(1.0)'})),
     transition('void => reveal', [
@@ -27,6 +29,7 @@ export const CardAnimation = trigger('cardUsed', [
     ])
   ]);
 
+  // world map anim - peek down
   export const MapAnimation =   trigger
   (
     'mapAnim', [

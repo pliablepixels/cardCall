@@ -38,7 +38,7 @@ export class ContactPage {
     phoneNumbers: []
     };
 
-  favList:FavType[] = []; 
+  favList:FavType[] = [];  // used to populate fav tab
   recentList:FavType[] = [];
 
   private _subHandler: (data: any) => void;
@@ -52,22 +52,43 @@ export class ContactPage {
    
   }
 
- // dialpad on off
-  toggleKeypad() {
+ /**
+  *  toggles display of dialpad
+  * 
+  * @memberof ContactPage
+  */
+ toggleKeypad() {
     this.displayKeypad = !this.displayKeypad;
 
   }
-
-  toggleWorldMap() {
+/**
+ * toggles display of day/night map
+ * 
+ * @memberof ContactPage
+ */
+toggleWorldMap() {
     this.showWorldMap = !this.showWorldMap;
     this.mapLoaded = false;
   }
 
-  mapLoadedCallback() {
+/**
+ * invoked when map is fully loaded
+ * used to turn off ion spinner
+ * 
+ * @memberof ContactPage
+ */
+mapLoadedCallback() {
     this.mapLoaded = true;
   }
 
-  // callback called when fav page un fabs some entry
+  /**
+   * this notification is invoked when you change the status of a fav item
+   * to ensure fav status in contact page is in sync with fav status in fav page
+   * 
+   * @param {any} obj 
+   * @returns 
+   * @memberof ContactPage
+   */
   favChangedNotification(obj) {
     console.log("Got Fab Changed Notif in Contacts " + JSON.stringify(obj));
     if (obj.name != this.contact.displayName && obj.name != "") return;
@@ -81,8 +102,14 @@ export class ContactPage {
 
 
   }
-
-  getLocTz (phone) {
+/**
+ * wrapper to return location and time from phone number
+ * 
+ * @param {any} phone 
+ * @returns 
+ * @memberof ContactPage
+ */
+getLocTz (phone) {
     return this.utils.getLocTz(phone);
   }
 
@@ -100,8 +127,15 @@ export class ContactPage {
 
   }
 
-  // called after you pick a contact
-  processContact(c): any {
+/**
+ * Invoked after you tap on an address book entry
+ * formats and displays relevent phone #s
+ * 
+ * @param {any} c 
+ * @returns {*} 
+ * @memberof ContactPage
+ */
+processContact(c): any {
     this.contact = {
       displayName: "",
       id: "",
@@ -136,8 +170,14 @@ export class ContactPage {
     }
   }
 
-  // when the keypad is used, we need to fake create the other attributes
-  // so they are uniform in the recent list
+
+  /**
+   * when the keypad is used, we need to fake create the other attributes
+   * so they are uniform in the recent list
+   * 
+   * @returns 
+   * @memberof ContactPage
+   */
   keypadDial() {
     if (!this.keypadNumber) return;
 
@@ -145,8 +185,6 @@ export class ContactPage {
    if (pp[0]!='+') {
      pp = '+' + pp;
     }
-
-    console.log ("Parsing"+pp);
     let u:FavType = {
       name:'keypad',
       phone:this.keypadNumber,
@@ -157,28 +195,26 @@ export class ContactPage {
     this.dial(u);
   }
 
-// long press short cut to ignore calling card
-  directDial(item) {
+
+/**
+ * dial directly, don't use calling card
+ * 
+ * @param {any} item 
+ * @memberof ContactPage
+ */
+directDial(item) {
     this.list.closeSlidingItems();
     this.utils.directDial(item.phone);
 
   }
 
-  // called when you tap an entry or dial
-  dial(item) {
-
-   /* getLocalInfo(item.phone,{ 
-      military: false, 
-      zone_display: 'area' 
-    }, 
-      function(object){ 
-        var phoneInfo = object.time.display +' '+ object.location; 
-        console.log ( phoneInfo ); 
-    
-        // 8:45 PM Nashville, TN 
-    
-    }); */
-  
+/**
+ * Invoked when you dial a numbr from any list
+ * 
+ * @param {any} item 
+ * @memberof ContactPage
+ */
+dial(item) {
     this.utils.dial(item.phone)
     .then (_ => {
       if (!this.utils.isPresentInRecent(item)) {
@@ -190,8 +226,13 @@ export class ContactPage {
     .catch (_ => {console.log ("Not called")})
   }
 
-  // clear history
-  removeAllRecent() {
+
+/**
+ * removes all recent history
+ * 
+ * @memberof ContactPage
+ */
+removeAllRecent() {
     const alert = this.alertCtrl.create({
       title: 'Please Confirm',
       message: 'Delete all recent calls?',
@@ -216,8 +257,13 @@ export class ContactPage {
 
   }
 
-  // remove a specific history
-  removeRecent (recent) {
+/**
+ * removed a specific entry from the recent list
+ * 
+ * @param {any} recent 
+ * @memberof ContactPage
+ */
+removeRecent (recent) {
     let ndx = this.recentList.indexOf(recent);
     if (ndx != -1) {
       this.recentList.splice(ndx,1);
@@ -226,8 +272,12 @@ export class ContactPage {
     }
   }
 
-  // pick an entry from address book
-  pickContact() {
+ /**
+  * displays the address book modal
+  * TBD: only select entries with a phone # - is it possible?
+  * @memberof ContactPage
+  */
+ pickContact() {
     this.platform.ready().then(() => {
       this.contacts.pickContact()
         .then(c => {

@@ -17,7 +17,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { IonicStorageModule } from '@ionic/storage';
 import { CommonUtilsProvider } from '../providers/common-utils/common-utils';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IonPullupModule } from 'ionic-pullup';
+
 
 
 
