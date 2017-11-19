@@ -1,10 +1,10 @@
-import { Component, ViewChild,trigger,state,style,transition,animate } from '@angular/core';
+import { Component, ViewChild, trigger, state, style, transition, animate } from '@angular/core';
 import { List, IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
 import { Contacts, Contact } from '@ionic-native/contacts';
 import { parse, format, asYouType } from 'libphonenumber-js';
 import { CommonUtilsProvider, FavType } from '../../providers/common-utils/common-utils';
 import { Events } from 'ionic-angular';
-import {CardAnimation, InputAnimation, MapAnimation} from '../../animations/animations'
+import { CardAnimation, InputAnimation, MapAnimation } from '../../animations/animations'
 
 
 
@@ -22,7 +22,7 @@ export class ContactPage {
   @ViewChild(List) list: List; // needed to close sliding list
   displayKeypad = false;
   keypadNumber = "";
-  cardInUse="(none)";
+  cardInUse = "(none)";
   cardState = 'hide';
   showWorldMap = false;
   mapLoaded = false;
@@ -30,54 +30,55 @@ export class ContactPage {
 
   // current selected contact from addr book
   contact: {
-    displayName:string, 
-    id:string, 
-    phoneNumbers:FavType[] } = {
-    displayName: "",
-    id: "",
-    phoneNumbers: []
+    displayName: string,
+    id: string,
+    phoneNumbers: FavType[]
+  } = {
+      displayName: "",
+      id: "",
+      phoneNumbers: []
     };
 
-  favList:FavType[] = [];  // used to populate fav tab
-  recentList:FavType[] = [];
+  favList: FavType[] = [];  // used to populate fav tab
+  recentList: FavType[] = [];
 
   private _subHandler: (data: any) => void;
 
-  constructor(public navCtrl: NavController, public contacts: Contacts, public platform: Platform, public utils: CommonUtilsProvider, public events: Events, public alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public contacts: Contacts, public platform: Platform, public utils: CommonUtilsProvider, public events: Events, public alertCtrl: AlertController) {
 
     // if you unfavorite an entry in fav page, make sure its not 
     // starred in contacts
     this._subHandler = (data) => { this.favChangedNotification(data) };
     this.events.subscribe('fav:updated', this._subHandler);
-   
+
   }
 
- /**
-  *  toggles display of dialpad
-  * 
-  * @memberof ContactPage
-  */
- toggleKeypad() {
+  /**
+   *  toggles display of dialpad
+   * 
+   * @memberof ContactPage
+   */
+  toggleKeypad() {
     this.displayKeypad = !this.displayKeypad;
 
   }
-/**
- * toggles display of day/night map
- * 
- * @memberof ContactPage
- */
-toggleWorldMap() {
+  /**
+   * toggles display of day/night map
+   * 
+   * @memberof ContactPage
+   */
+  toggleWorldMap() {
     this.showWorldMap = !this.showWorldMap;
     this.mapLoaded = false;
   }
 
-/**
- * invoked when map is fully loaded
- * used to turn off ion spinner
- * 
- * @memberof ContactPage
- */
-mapLoadedCallback() {
+  /**
+   * invoked when map is fully loaded
+   * used to turn off ion spinner
+   * 
+   * @memberof ContactPage
+   */
+  mapLoadedCallback() {
     this.mapLoaded = true;
   }
 
@@ -102,14 +103,14 @@ mapLoadedCallback() {
 
 
   }
-/**
- * wrapper to return location and time from phone number
- * 
- * @param {any} phone 
- * @returns 
- * @memberof ContactPage
- */
-getLocTz (phone) {
+  /**
+   * wrapper to return location and time from phone number
+   * 
+   * @param {any} phone 
+   * @returns 
+   * @memberof ContactPage
+   */
+  getLocTz(phone) {
     return this.utils.getLocTz(phone);
   }
 
@@ -127,20 +128,20 @@ getLocTz (phone) {
 
   }
 
-/**
- * Invoked after you tap on an address book entry
- * formats and displays relevent phone #s
- * 
- * @param {any} c 
- * @returns {*} 
- * @memberof ContactPage
- */
-processContact(c): any {
+  /**
+   * Invoked after you tap on an address book entry
+   * formats and displays relevent phone #s
+   * 
+   * @param {any} c 
+   * @returns {*} 
+   * @memberof ContactPage
+   */
+  processContact(c): any {
     this.contact = {
       displayName: "",
       id: "",
       phoneNumbers: []
-      };
+    };
 
 
     // seems in iOS displayName if empty
@@ -163,10 +164,10 @@ processContact(c): any {
         icon: this.utils.returnIcon(p[i].type),
         phone: pp,
         type: p[i].type,
-        name:this.contact.displayName
+        name: this.contact.displayName
 
       })
-     // console.log("PUSHED:" + JSON.stringify(pc));
+      // console.log("PUSHED:" + JSON.stringify(pc));
     }
   }
 
@@ -181,58 +182,58 @@ processContact(c): any {
   keypadDial() {
     if (!this.keypadNumber) return;
 
-   let pp = this.keypadNumber;
-   if (pp[0]!='+') {
-     pp = '+' + pp;
+    let pp = this.keypadNumber;
+    if (pp[0] != '+') {
+      pp = '+' + pp;
     }
-    let u:FavType = {
-      name:'keypad',
-      phone:this.keypadNumber,
-      type:'',
-      icon:'call'
+    let u: FavType = {
+      name: 'keypad',
+      phone: this.keypadNumber,
+      type: '',
+      icon: 'call'
 
     }
     this.dial(u);
   }
 
 
-/**
- * dial directly, don't use calling card
- * 
- * @param {any} item 
- * @memberof ContactPage
- */
-directDial(item) {
+  /**
+   * dial directly, don't use calling card
+   * 
+   * @param {any} item 
+   * @memberof ContactPage
+   */
+  directDial(item) {
     this.list.closeSlidingItems();
     this.utils.directDial(item.phone);
 
   }
 
-/**
- * Invoked when you dial a numbr from any list
- * 
- * @param {any} item 
- * @memberof ContactPage
- */
-dial(item) {
+  /**
+   * Invoked when you dial a numbr from any list
+   * 
+   * @param {any} item 
+   * @memberof ContactPage
+   */
+  dial(item) {
     this.utils.dial(item.phone)
-    .then (_ => {
-      if (!this.utils.isPresentInRecent(item)) {
-        // add to top of recent call list if not already there
-        this.recentList.unshift(item);
-        this.utils.setRecentList (this.recentList);
-      } 
-    })
-    .catch (_ => {console.log ("Not called")})
+      .then(_ => {
+        if (!this.utils.isPresentInRecent(item)) {
+          // add to top of recent call list if not already there
+          this.recentList.unshift(item);
+          this.utils.setRecentList(this.recentList);
+        }
+      })
+      .catch(_ => { console.log("Not called") })
   }
 
 
-/**
- * removes all recent history
- * 
- * @memberof ContactPage
- */
-removeAllRecent() {
+  /**
+   * removes all recent history
+   * 
+   * @memberof ContactPage
+   */
+  removeAllRecent() {
     const alert = this.alertCtrl.create({
       title: 'Please Confirm',
       message: 'Delete all recent calls?',
@@ -247,8 +248,8 @@ removeAllRecent() {
         {
           text: 'OK',
           handler: () => {
-           this.recentList.length = 0;
-           this.utils.setRecentList(this.recentList);
+            this.recentList.length = 0;
+            this.utils.setRecentList(this.recentList);
 
           }
         }
@@ -257,64 +258,64 @@ removeAllRecent() {
 
   }
 
-/**
- * removed a specific entry from the recent list
- * 
- * @param {any} recent 
- * @memberof ContactPage
- */
-removeRecent (recent) {
+  /**
+   * removed a specific entry from the recent list
+   * 
+   * @param {any} recent 
+   * @memberof ContactPage
+   */
+  removeRecent(recent) {
     let ndx = this.recentList.indexOf(recent);
     if (ndx != -1) {
-      this.recentList.splice(ndx,1);
+      this.recentList.splice(ndx, 1);
       this.utils.setRecentList(this.recentList);
 
     }
   }
 
- /**
-  * displays the address book modal
-  * TBD: only select entries with a phone # - is it possible?
-  * @memberof ContactPage
-  */
- pickContact() {
+  /**
+   * displays the address book modal
+   * TBD: only select entries with a phone # - is it possible?
+   * @memberof ContactPage
+   */
+  pickContact() {
     this.platform.ready().then(() => {
       this.contacts.pickContact()
         .then(c => {
           this.processContact(c);
-         // console.log("PICKED " + JSON.stringify(this.contact))
+          // console.log("PICKED " + JSON.stringify(this.contact))
 
         })
 
     })
   }
-  
+
   ionViewWillEnter() {
     this.cardState = 'hide';
-    setTimeout (_ => {this.cardState = 'reveal';},20);
-    this.cardInUse="(none)";
+    setTimeout(_ => { this.cardState = 'reveal'; }, 20);
+    this.cardInUse = "(none)";
     this.utils.getFavList()
-      .then(fav => { 
-        if (fav) this.favList = fav; 
+      .then(fav => {
+        if (fav) this.favList = fav;
         return this.utils.getRecentList();
       })
-      .then (recents => {
+      .then(recents => {
         if (recents) this.recentList = recents;
         return this.utils.getCallingCard();
       })
-      .then (cards => {
-        this.cardInUse = (cards && cards.length) ? cards[0].name: 'none';
+      .then(cards => {
+        this.cardInUse = (cards && cards.length) ? cards[0].name : 'none';
       });
 
-   
+
   }
 
   ionViewWillUnload() {
     console.log("Killing fav subscription");
     this.events.unsubscribe('fab:updated', this._subHandler);
     this._subHandler = undefined;
-   
- 
+
+
 
   }
 

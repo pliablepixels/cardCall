@@ -2,9 +2,9 @@
   <ion-navbar color="sblue">
     <ion-title>Settings</ion-title>
     <ion-buttons end>
-    <button ion-button icon-only (click)="toggleEdit()">
-      <ion-icon name="create"></ion-icon>
-    </button>
+      <button ion-button icon-only (click)="toggleEdit()">
+        <ion-icon name="create"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -12,13 +12,14 @@
 <ion-content padding>
   <ion-list>
 
-      <ion-item *ngIf="!isEdit">
-        <p text-wrap class="vtext">Read only mode. Tap <ion-icon name="create"></ion-icon> to edit </p>
-      </ion-item>
-      <ion-item>
-          <ion-label color="primary">Name:</ion-label>
-          <ion-input [readonly]="!isEdit" type="text" placeholder="" [(ngModel)]="ccard[cardNdx].name"></ion-input>
-        </ion-item>
+    <ion-item *ngIf="!isEdit">
+      <p text-wrap class="vtext">Read only mode. Tap
+        <ion-icon name="create"></ion-icon> to edit </p>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Name:</ion-label>
+      <ion-input [readonly]="!isEdit" type="text" placeholder="" [(ngModel)]="ccard[cardNdx].name"></ion-input>
+    </ion-item>
 
     <ion-item>
       <ion-label color="primary">Access Number:</ion-label>
@@ -27,7 +28,7 @@
 
     <ion-item>
       <ion-label color="primary">PIN:</ion-label>
-      <ion-input [readonly]="!isEdit"  type="password" placeholder="" [(ngModel)]="ccard[cardNdx].pin"></ion-input>
+      <ion-input [readonly]="!isEdit" type="password" placeholder="" [(ngModel)]="ccard[cardNdx].pin"></ion-input>
     </ion-item>
   </ion-list>
 
@@ -43,7 +44,9 @@
     <ion-item-group [reorder]="isEdit" (ionItemReorder)="reorderItems($event)">
       <ion-item-sliding *ngFor="let item of ccard[cardNdx].order" #slidingItem>
 
-        <ion-item [ngClass]="isEdit?'':'forced-grey'">{{item.name}} <ion-note *ngIf="item.name=='pause'"> {{item.value}}s (swipe right to change)</ion-note> </ion-item>
+        <ion-item [ngClass]="isEdit?'':'forced-grey'">{{item.name}}
+          <ion-note *ngIf="item.name=='pause'"> {{item.value}}s (swipe right to change)</ion-note>
+        </ion-item>
 
         <ion-item-options *ngIf="isEdit" side="right">
           <button ion-button icon-only color="danger" (click)="deleteItem(item)">
@@ -52,13 +55,13 @@
         </ion-item-options>
 
         <ion-item-options *ngIf="isEdit && item.name=='pause'" side="left">
-            <button ion-button icon-only color="primary" (click)="changePause(item, -2)">
-              <ion-icon name="remove"></ion-icon>
-            </button>
-            <button ion-button icon-only color="secondary" (click)="changePause(item, 2)">
-                <ion-icon name="add"></ion-icon>
-              </button>
-          </ion-item-options>
+          <button ion-button icon-only color="primary" (click)="changePause(item, -2)">
+            <ion-icon name="remove"></ion-icon>
+          </button>
+          <button ion-button icon-only color="secondary" (click)="changePause(item, 2)">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-item-options>
 
       </ion-item-sliding>
 

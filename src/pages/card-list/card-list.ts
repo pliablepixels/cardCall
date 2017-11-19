@@ -1,24 +1,24 @@
-import { Component, ViewChild,trigger,state,style,transition,animate } from '@angular/core';
-import { List, IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
-import {SettingPage} from '../setting/setting';
+import { Component, ViewChild, trigger, state, style, transition, animate } from '@angular/core';
+import { List, IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { SettingPage } from '../setting/setting';
 import { CommonUtilsProvider, CallingCard } from '../../providers/common-utils/common-utils';
-import {InputAnimation} from '../../animations/animations'
+import { InputAnimation } from '../../animations/animations'
 
 @Component({
   selector: 'page-card-list',
   templateUrl: 'card-list.html',
   animations: [
     InputAnimation
-]
-  
+  ]
+
 })
 
 export class CardListPage {
 
   @ViewChild(List) list: List;
-  ccards:CallingCard[] = [];
-  displayAddCard:boolean = false;
-  newCardName:string = "";
+  ccards: CallingCard[] = [];
+  displayAddCard: boolean = false;
+  newCardName: string = "";
 
   /**
    * edit details for a specific card name
@@ -33,11 +33,11 @@ export class CardListPage {
   go(name, edit) {
     // make sure transition happens after we write to DB
     this.utils.setCallingCard(this.ccards)
-    .then (_=> {this.navCtrl.push(SettingPage, {name:name, edit:edit});})
-    
+      .then(_ => { this.navCtrl.push(SettingPage, { name: name, edit: edit }); })
+
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public utils:CommonUtilsProvider, public alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public utils: CommonUtilsProvider, public alertCtrl: AlertController) {
   }
 
   /**
@@ -52,25 +52,25 @@ export class CardListPage {
     this.list.closeSlidingItems();
     let ndx = this.ccards.indexOf(card);
     if (ndx != -1) {
-      this.ccards.splice (ndx,1);
+      this.ccards.splice(ndx, 1);
       this.ccards.unshift(card);
       this.utils.setCallingCard(this.ccards);
     }
 
-    
+
 
   }
-/**
- * saves new card if valid
- * and removes the input
- * 
- * @returns 
- * @memberof CardListPage
- */
-hideAndSaveCard() {
+  /**
+   * saves new card if valid
+   * and removes the input
+   * 
+   * @returns 
+   * @memberof CardListPage
+   */
+  hideAndSaveCard() {
     this.displayAddCard = false;
     let i;
-    for (i=0; i < this.ccards.length; i++) {
+    for (i = 0; i < this.ccards.length; i++) {
       if (this.ccards[i].name.toLowerCase() == this.newCardName) break;
     }
     if (i < this.ccards.length) {
@@ -78,7 +78,7 @@ hideAndSaveCard() {
       return;
     }
     else {
-      this.ccards.push ({name:this.newCardName, access:"",pin:"", order:[]});
+      this.ccards.push({ name: this.newCardName, access: "", pin: "", order: [] });
       this.go(this.newCardName, true);
     }
   }
@@ -93,13 +93,13 @@ hideAndSaveCard() {
     this.displayAddCard = !this.displayAddCard;
 
   }
-/**
- * removes a card after a prompt
- * 
- * @param {any} card 
- * @memberof CardListPage
- */
-removeCard(card) {
+  /**
+   * removes a card after a prompt
+   * 
+   * @param {any} card 
+   * @memberof CardListPage
+   */
+  removeCard(card) {
 
     const alert = this.alertCtrl.create({
       title: 'Please Confirm',
@@ -119,29 +119,29 @@ removeCard(card) {
             this.list.closeSlidingItems();
             let ndx = this.ccards.indexOf(card);
             if (ndx != -1) {
-              this.ccards.splice(ndx,1);
-                this.utils.setCallingCard(this.ccards);
-              
+              this.ccards.splice(ndx, 1);
+              this.utils.setCallingCard(this.ccards);
+
             }
-           
+
           }
         }
       ]
     }).present();
 
 
-    
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CardListPage');
   }
-  
+
   ionViewDidEnter() {
     this.utils.getCallingCard()
-     .then (ccards => {
-       //console.log ("INSIDE CARD LIST: Got calling card:" + JSON.stringify(ccards));
-       if (ccards) this.ccards = ccards;
-     })
-   }
+      .then(ccards => {
+        //console.log ("INSIDE CARD LIST: Got calling card:" + JSON.stringify(ccards));
+        if (ccards) this.ccards = ccards;
+      })
+  }
 }

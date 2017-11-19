@@ -1,16 +1,16 @@
-import { Component, ViewChild,trigger,state,style,transition,animate } from '@angular/core';
+import { Component, ViewChild, trigger, state, style, transition, animate } from '@angular/core';
 import { List, NavController, Platform, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { CallNumber } from '@ionic-native/call-number';
 import { FavType, CommonUtilsProvider } from '../../providers/common-utils/common-utils';
 import { Events } from 'ionic-angular';
-import {CardAnimation, MapAnimation} from '../../animations/animations'
+import { CardAnimation, MapAnimation } from '../../animations/animations'
 
 
 @Component({
   selector: 'page-fav',
   templateUrl: 'fav.html',
- 
+
   animations: [
     CardAnimation,
     MapAnimation
@@ -21,8 +21,8 @@ export class FavPage {
   @ViewChild(List) list: List; // needed to close sliding list
 
   favList: FavType[] = [];
-  recentList:FavType[] = [];
-  cardInUse="(none)";
+  recentList: FavType[] = [];
+  cardInUse = "(none)";
   cardState = 'hide';
   showWorldMap = false;
   mapLoaded = false;
@@ -31,22 +31,22 @@ export class FavPage {
 
   }
 
-/**
- * toggle day/night map
- * 
- * @memberof FavPage
- */
-toggleWorldMap() {
+  /**
+   * toggle day/night map
+   * 
+   * @memberof FavPage
+   */
+  toggleWorldMap() {
     this.showWorldMap = !this.showWorldMap;
   }
 
-/**
- * invoked when map image is loaded.
- * used to hide ion-spinner
- * 
- * @memberof FavPage
- */
-mapLoadedCallback() {
+  /**
+   * invoked when map image is loaded.
+   * used to hide ion-spinner
+   * 
+   * @memberof FavPage
+   */
+  mapLoadedCallback() {
     this.mapLoaded = true;
   }
 
@@ -82,13 +82,13 @@ mapLoadedCallback() {
 
   }
 
-/**
- * removes a specific favorite
- * 
- * @param {FavType} fav 
- * @memberof FavPage
- */
-removeFav(fav: FavType) {
+  /**
+   * removes a specific favorite
+   * 
+   * @param {FavType} fav 
+   * @memberof FavPage
+   */
+  removeFav(fav: FavType) {
     let ndx = this.favList.indexOf(fav);
     if (ndx !== -1) {
       this.favList.splice(ndx, 1);
@@ -109,20 +109,20 @@ removeFav(fav: FavType) {
    * @returns 
    * @memberof FavPage
    */
-  getLocTz (phone) {
+  getLocTz(phone) {
     return this.utils.getLocTz(phone);
   }
 
-/**
- * dial # without using calling card
- * 
- * @param {any} fav 
- * @returns 
- * @memberof FavPage
- */
-directDial (fav) {
+  /**
+   * dial # without using calling card
+   * 
+   * @param {any} fav 
+   * @returns 
+   * @memberof FavPage
+   */
+  directDial(fav) {
     this.list.closeSlidingItems();
-    return this.utils.directDial (fav.phone);
+    return this.utils.directDial(fav.phone);
   }
 
   /**
@@ -134,31 +134,31 @@ directDial (fav) {
   dial(fav) {
     console.log("FAV DIAL " + JSON.stringify(fav))
     this.utils.dial(fav.phone)
-    .then (_ => {
-      if (!this.utils.isPresentInRecent(fav)) {
-        // add to top of recent call list if not already there
-        this.recentList.unshift(fav);
-        this.utils.setRecentList (this.recentList);
-      } 
-    })
-    .catch (_ => {console.log ("Not called")})
+      .then(_ => {
+        if (!this.utils.isPresentInRecent(fav)) {
+          // add to top of recent call list if not already there
+          this.recentList.unshift(fav);
+          this.utils.setRecentList(this.recentList);
+        }
+      })
+      .catch(_ => { console.log("Not called") })
 
   }
 
   ionViewWillEnter() {
     this.cardState = 'hide';
-    setTimeout (_ => {this.cardState = 'reveal';},20);
-    this.cardInUse="(none)";
+    setTimeout(_ => { this.cardState = 'reveal'; }, 20);
+    this.cardInUse = "(none)";
     this.utils.getFavList()
       .then(favs => {
         if (favs) this.favList = favs;
         return this.utils.getCallingCard();
       })
-      .then (cards => {
-        this.cardInUse = (cards && cards.length) ? cards[0].name: 'none';
+      .then(cards => {
+        this.cardInUse = (cards && cards.length) ? cards[0].name : 'none';
         return this.utils.getRecentList();
       })
-      .then ( recents => {
+      .then(recents => {
         if (recents) this.recentList = recents;
       });
 

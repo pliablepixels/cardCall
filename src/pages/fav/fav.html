@@ -1,4 +1,4 @@
-<ion-header >
+<ion-header>
   <ion-navbar color="sblue">
     <ion-title>
       Favorites
@@ -6,9 +6,9 @@
 
     <ion-buttons end>
 
-        <button ion-button icon-only (click)="toggleWorldMap()">
-            <ion-icon name="globe"></ion-icon>
-          </button>
+      <button ion-button icon-only (click)="toggleWorldMap()">
+        <ion-icon name="globe"></ion-icon>
+      </button>
 
       <button ion-button icon-only (click)="removeAllFav()">
         <ion-icon name="trash"></ion-icon>
@@ -19,16 +19,16 @@
 
 <ion-content>
 
-    <ion-item  [@mapAnim]  no-padding class="fullItem" *ngIf="showWorldMap">
-        <div>
-            <ion-spinner *ngIf="!mapLoaded" style="position:relative; top:50%; left:50%;" name="bubbles">loading day night map</ion-spinner>
-        <img  src="http://api.usno.navy.mil/imagery/earth.png?date=today" width="100%" (load)="mapLoadedCallback()" />
-        
-        </div>
-       </ion-item>
+  <ion-item [@mapAnim] no-padding class="fullItem" *ngIf="showWorldMap">
+    <div>
+      <ion-spinner *ngIf="!mapLoaded" style="position:relative; top:50%; left:50%;" name="bubbles">loading day night map</ion-spinner>
+      <img src="http://api.usno.navy.mil/imagery/earth.png?date=today" width="100%" (load)="mapLoadedCallback()" />
+
+    </div>
+  </ion-item>
 
   <ion-list>
-    <ion-item-sliding  *ngFor="let fav of favList" detail-push>
+    <ion-item-sliding *ngFor="let fav of favList" detail-push>
       <button ion-item (click)="dial(fav)">
         {{fav.name}}
         <ion-note item-end>{{fav.type}}</ion-note>
@@ -54,5 +54,5 @@
 </ion-content>
 
 <ion-footer [@cardUsed]="cardState" class="cardFooter">
-    <p text-center>card in use: {{cardInUse}}</p>
+  <p text-center>card in use: {{cardInUse}}</p>
 </ion-footer>

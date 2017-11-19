@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-navbar color="sblue">
     <ion-title>Manage Cards</ion-title>
@@ -23,7 +22,8 @@
 
   <ion-list>
     <ion-item-sliding *ngFor="let card of ccards;let ndx=index" detail-push>
-      <button  ion-item (click)="go(card.name, false)"><ion-icon item-end *ngIf="ndx==0" name="checkmark" color="primary"> </ion-icon>{{card.name}}</button>
+      <button ion-item (click)="go(card.name, false)">
+        <ion-icon item-end *ngIf="ndx==0" name="checkmark" color="primary"> </ion-icon>{{card.name}}</button>
 
       <ion-item-options side="right">
         <button ion-button icon-only color="danger" (click)="removeCard(card)">
@@ -32,10 +32,10 @@
       </ion-item-options>
 
       <ion-item-options side="left">
-          <button ion-button icon-only color="primary" (click)="setDefault(card)">
-            <ion-icon name="checkmark"></ion-icon>
-          </button>
-        </ion-item-options>
+        <button ion-button icon-only color="primary" (click)="setDefault(card)">
+          <ion-icon name="checkmark"></ion-icon>
+        </button>
+      </ion-item-options>
 
     </ion-item-sliding>
     <ion-item *ngIf="!ccards.length">
