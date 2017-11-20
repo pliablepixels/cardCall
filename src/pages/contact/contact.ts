@@ -1,10 +1,14 @@
-import { Component, ViewChild, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { List, IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
 import { Contacts, Contact } from '@ionic-native/contacts';
 import { parse, format, asYouType } from 'libphonenumber-js';
 import { CommonUtilsProvider, FavType } from '../../providers/common-utils/common-utils';
 import { Events } from 'ionic-angular';
-import { CardAnimation, InputAnimation, MapAnimation } from '../../animations/animations'
+
+
+import { CardAnimation, InputAnimation } from '../../animations/animations'
+
+import { EarthMapComponent } from '../../components/earth-map/earth-map';
 
 
 
@@ -13,8 +17,8 @@ import { CardAnimation, InputAnimation, MapAnimation } from '../../animations/an
   templateUrl: 'contact.html',
   animations: [
     CardAnimation,
-    InputAnimation,
-    MapAnimation
+    InputAnimation
+    
   ]
 })
 

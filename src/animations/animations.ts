@@ -8,8 +8,6 @@ import {
 } from '@angular/core';
 
 
-import {query, stagger} from '@angular/animations';
-
 // current card used anim - slide up from bottom
 export const CardAnimation = trigger('cardUsed', [
     

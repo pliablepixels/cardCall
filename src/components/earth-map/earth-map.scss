@@ -1,0 +1,14 @@
+earth-map {
+
+    // map image - no padding
+.fullItem {
+    .label {
+        margin: 0 !important;
+     }
+     
+     .item-inner {
+        padding-right: 0px!important;
+        padding-left: 0px!important;
+     }
+}
+}

@@ -1,10 +1,11 @@
-import { Component, ViewChild, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { List, NavController, Platform, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { CallNumber } from '@ionic-native/call-number';
 import { FavType, CommonUtilsProvider } from '../../providers/common-utils/common-utils';
 import { Events } from 'ionic-angular';
-import { CardAnimation, MapAnimation } from '../../animations/animations'
+import { CardAnimation } from '../../animations/animations'
+import { EarthMapComponent } from '../../components/earth-map/earth-map';
 
 
 @Component({
@@ -12,8 +13,7 @@ import { CardAnimation, MapAnimation } from '../../animations/animations'
   templateUrl: 'fav.html',
 
   animations: [
-    CardAnimation,
-    MapAnimation
+    CardAnimation
   ]
 })
 export class FavPage {

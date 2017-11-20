@@ -17,6 +17,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { IonicStorageModule } from '@ionic/storage';
 import { CommonUtilsProvider } from '../providers/common-utils/common-utils';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EarthMapComponent } from '../components/earth-map/earth-map';
 
 
 
@@ -28,7 +29,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ContactPage,
     SettingPage,
     TabsPage,
-    CardListPage
+    CardListPage,
+    EarthMapComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ContactPage,
     SettingPage,
     TabsPage,
-    CardListPage
+    CardListPage,
+  
   ],
   providers: [
     StatusBar,
