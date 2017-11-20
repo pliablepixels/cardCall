@@ -37,7 +37,7 @@
   <ion-item [@mapAnim] no-padding class="fullItem" *ngIf="showWorldMap">
     <div>
       <ion-spinner *ngIf="!mapLoaded" name="bubbles"></ion-spinner>
-      <img src="http://api.usno.navy.mil/imagery/earth.png?date=today" (load)="mapLoadedCallback()" />
+      <img src="http://api.usno.navy.mil/imagery/earth.png?date=today&ID=PP_CardCall" (load)="mapLoadedCallback()" />
     </div>
   </ion-item>
 
