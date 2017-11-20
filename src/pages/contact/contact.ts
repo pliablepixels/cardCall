@@ -4,10 +4,7 @@ import { Contacts, Contact } from '@ionic-native/contacts';
 import { parse, format, asYouType } from 'libphonenumber-js';
 import { CommonUtilsProvider, FavType } from '../../providers/common-utils/common-utils';
 import { Events } from 'ionic-angular';
-
-
 import { CardAnimation, InputAnimation } from '../../animations/animations'
-
 import { EarthMapComponent } from '../../components/earth-map/earth-map';
 
 
