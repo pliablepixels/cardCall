@@ -19,9 +19,6 @@ import { CommonUtilsProvider } from '../providers/common-utils/common-utils';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EarthMapComponent } from '../components/earth-map/earth-map';
 
-
-
-
 @NgModule({
   declarations: [
     MyApp,
@@ -30,13 +27,14 @@ import { EarthMapComponent } from '../components/earth-map/earth-map';
     SettingPage,
     TabsPage,
     CardListPage,
-    EarthMapComponent
+   EarthMapComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot({name:'__cardCallDB', driverOrder:['sqlite','websql','indexeddb']})
+    IonicStorageModule.forRoot({name:'__cardCallDB', driverOrder:['sqlite','websql','indexeddb']}),
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [

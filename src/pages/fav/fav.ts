@@ -11,7 +11,6 @@ import { EarthMapComponent } from '../../components/earth-map/earth-map';
 @Component({
   selector: 'page-fav',
   templateUrl: 'fav.html',
-
   animations: [
     CardAnimation
   ]

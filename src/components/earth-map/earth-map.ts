@@ -1,6 +1,7 @@
 import { Component, Input} from '@angular/core';
 import {  MapAnimation } from '../../animations/animations';
 
+
 @Component({
   selector: 'earth-map',
   templateUrl: 'earth-map.html',
